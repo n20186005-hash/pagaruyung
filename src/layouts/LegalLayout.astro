@@ -1,0 +1,66 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: "id" | "en";
+  alternateHref: string;
+  eyebrow: string;
+  heading: string;
+  lead: string;
+}
+
+const { title, description, lang = "id", alternateHref, eyebrow, heading, lead } = Astro.props;
+
+const homeHref = lang === "en" ? "/en/" : "/";
+const homeLabel = lang === "en" ? "Back to guide" : "Kembali ke panduan";
+const alternateLang = lang === "en" ? "id" : "en";
+---
+
+<BaseLayout {title} {description} {lang} {alternateHref} alternateLang={alternateLang}>
+  <header class="legal-header">
+    <div class="content-wrap legal-header-bar">
+      <a class="brand brand-dark" href={homeHref} aria-label="Istano Basa Pagaruyung">
+        <svg class="brand-mark" viewBox="0 0 54 44" aria-hidden="true">
+          <path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" />
+          <path d="M8 17 15 9l4 9M25 7l2-5 3 5M38 18l4-9 7 8" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" />
+        </svg>
+        <span><b>ISTANO BASA</b><small>PAGARUYUNG · TANAH DATAR</small></span>
+      </a>
+      <nav class="legal-nav" aria-label={lang === "en" ? "Legal page navigation" : "Navigasi halaman legal"}>
+        <a href={homeHref}>{homeLabel}</a>
+        {lang === "en" ? (
+          <div class="language-switch language-switch-dark" aria-label="Choose language">
+            <a href={alternateHref} lang="id">ID</a>
+            <a class="active" href={Astro.url.pathname} aria-current="page">EN</a>
+          </div>
+        ) : (
+          <div class="language-switch language-switch-dark" aria-label="Pilih bahasa">
+            <a class="active" href={Astro.url.pathname} aria-current="page">ID</a>
+            <a href={alternateHref} lang="en">EN</a>
+          </div>
+        )}
+      </nav>
+    </div>
+  </header>
+
+  <main class="legal-main">
+    <section class="content-wrap legal-intro">
+      <div>
+        <p class="section-label"><span>LEGAL</span> {eyebrow}</p>
+      </div>
+      <div>
+        <h1>{heading}</h1>
+        <p>{lead}</p>
+      </div>
+    </section>
+
+    <section class="content-wrap legal-document">
+      <slot />
+    </section>
+  </main>
+
+  <SiteFooter lang={lang} />
+</BaseLayout>

@@ -1,4 +1,5 @@
 ---
+import SiteFooter from "../../components/SiteFooter.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const title = "Istano Basa Pagaruyung | Tanah Datar Visitor Guide";
@@ -92,30 +93,11 @@ const faqJsonLd = {
     <section id="faq" class="faq-section content-wrap section-spacing"><div class="section-label"><span>07</span> FREQUENTLY ASKED QUESTIONS</div><div class="faq-grid"><h2>Questions often asked before the trip.</h2><div class="faq-list">{faq.map((item) => <details><summary>{item.q}<span>+</span></summary><p>{item.a}</p></details>)}</div></div></section>
   </main>
 
-  <footer class="site-footer"><div class="content-wrap footer-grid"><div class="footer-brand"><svg viewBox="0 0 54 44" aria-hidden="true"><path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" /><path d="M8 17 15 9l4 9 8-18 8 18 4-10 8 10" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" /></svg><div><b>ISTANO BASA PAGARUYUNG</b><p>An independent visitor guide to Tanah Datar.</p></div></div><div class="footer-links"><button data-open-dialog="privacy">Privacy Policy</button><button data-open-dialog="terms">Terms of Service</button><button data-open-dialog="cookies">Cookie Settings</button></div><div class="footer-note"><p>This is an independent, non-profit visitor-information guide. It is not affiliated with Istano Basa Pagaruyung, any government body, or any commercial operator.</p><p>Information is summarised from Indonesia Travel, Wikimedia Commons, Trip.com, Wikivoyage, and other public reference sources. No specific business is recommended.</p><p>Photos remain subject to the copyright of their respective photographers; see the credits and licences shown. © 2026 Istano Basa Pagaruyung Guide.</p></div></div></footer>
-
-  <dialog data-dialog="privacy"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">PRIVACY POLICY · AUGUST 2026</p><h2>Minimal data, clear explanation.</h2><p>We only collect the data needed to run this site, such as basic browsing data, Cookie choices, and information you voluntarily provide through a contact channel.</p><h3>Use and third-party services</h3><p>Data may be used to understand site use, improve content, respond to requests, and meet legal obligations. This site may use Google Maps for maps and Google Analytics for anonymous statistics only when analytical consent is granted.</p><h3>Your rights</h3><p>You may request access to, correction of, or deletion of relevant personal data, and may object in accordance with applicable regulations.</p></article></dialog>
-  <dialog data-dialog="terms"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">TERMS OF SERVICE · AUGUST 2026</p><h2>Use this as a guide, not a substitute for verification.</h2><p>All content is provided for general information. We are an independent travel guide, not an official representative of the attraction, government, or any business.</p><h3>Accuracy of information</h3><p>We aim to use traceable public sources, but schedules, services, prices, access, and travel conditions may change. Confirm important information with official channels or on-site staff before making travel decisions.</p><h3>Copyright and liability</h3><p>The site design and original writing are protected by copyright. Photos follow the licences shown. This site is provided as is, without warranty for losses arising from travel decisions.</p></article></dialog>
-  <dialog data-dialog="cookies"><article class="policy-dialog cookie-dialog"><button class="dialog-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">COOKIE SETTINGS</p><h2>You decide.</h2><p>Essential Cookies are needed for these settings to work. Analytics Cookies are used only if you allow them. This site does not use marketing Cookies.</p><label class="cookie-row disabled"><span><b>Essential Cookies</b><small>Needed to remember your choices.</small></span><input type="checkbox" checked disabled /></label><label class="cookie-row"><span><b>Analytics</b><small>Helps us understand anonymous site use through Google Analytics.</small></span><input id="analytics-consent" type="checkbox" /></label><label class="cookie-row"><span><b>Preferences</b><small>Saves display and Cookie choices on this device.</small></span><input id="preferences-consent" type="checkbox" checked /></label><div class="cookie-actions"><button class="button dark" data-save-cookie>Save choices <span>→</span></button><button class="button ghost" data-reject-cookie>Reject analytics</button></div></article></dialog>
+  <SiteFooter lang="en" />
 
   <script is:inline>
-    const cookieKey = "istano-pagaruyung-cookie-preferences";
-    const dialogButtons = document.querySelectorAll("[data-open-dialog]");
-    const dialogs = document.querySelectorAll("dialog[data-dialog]");
-    const closeButtons = document.querySelectorAll("[data-close-dialog]");
     const menuButton = document.querySelector("[data-menu-button]");
     const menu = document.querySelector("[data-menu]");
-    const analytics = document.querySelector("#analytics-consent");
-    const preferences = document.querySelector("#preferences-consent");
-    let gaLoaded = false;
-    function loadAnalytics() { if (gaLoaded) return; gaLoaded = true; const external = document.createElement("script"); external.async = true; external.src = "https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"; document.head.append(external); window.dataLayer = window.dataLayer || []; function gtag(){ window.dataLayer.push(arguments); } gtag("js", new Date()); gtag("config", "G-HXM22WWPKP", { anonymize_ip: true }); }
-    function applyPreferences(value) { analytics.checked = Boolean(value.analytics); preferences.checked = value.preferences !== false; if (value.analytics) loadAnalytics(); }
-    try { const saved = JSON.parse(localStorage.getItem(cookieKey) || "null"); if (saved) applyPreferences(saved); } catch {}
-    dialogButtons.forEach((button) => button.addEventListener("click", () => document.querySelector(`[data-dialog="${button.dataset.openDialog}"]`)?.showModal()));
-    closeButtons.forEach((button) => button.addEventListener("click", () => button.closest("dialog")?.close()));
-    dialogs.forEach((dialog) => dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); }));
-    document.querySelector("[data-save-cookie]")?.addEventListener("click", () => { const value = { analytics: analytics.checked, preferences: preferences.checked }; localStorage.setItem(cookieKey, JSON.stringify(value)); if (value.analytics) loadAnalytics(); document.querySelector('[data-dialog="cookies"]')?.close(); });
-    document.querySelector("[data-reject-cookie]")?.addEventListener("click", () => { localStorage.setItem(cookieKey, JSON.stringify({ analytics: false, preferences: preferences.checked })); analytics.checked = false; document.querySelector('[data-dialog="cookies"]')?.close(); });
     menuButton?.addEventListener("click", () => { const open = menu.classList.toggle("open"); menuButton.setAttribute("aria-expanded", String(open)); });
     menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => { menu.classList.remove("open"); menuButton?.setAttribute("aria-expanded", "false"); }));
   </script>

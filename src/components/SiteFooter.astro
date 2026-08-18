@@ -1,0 +1,58 @@
+---
+interface Props {
+  lang?: "id" | "en";
+}
+
+const { lang = "id" } = Astro.props;
+
+const footerCopy = lang === "en"
+  ? {
+      brandTagline: "An independent visitor guide to Tanah Datar.",
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+      cookies: "Cookie Settings",
+      privacyHref: "/en/privacy-policy/",
+      termsHref: "/en/terms-of-service/",
+      cookiesHref: "/en/cookie-settings/",
+      noteOne: "This is an independent, non-profit visitor-information guide. It is not affiliated with Istano Basa Pagaruyung, any government body, or any commercial operator.",
+      noteTwo: "Information is summarised from Indonesia Travel, Wikimedia Commons, Trip.com, Wikivoyage, and other public reference sources. No specific business is recommended.",
+      noteThree: "Photos remain subject to the copyright of their respective photographers; see the credits and licences shown. © 2026 Istano Basa Pagaruyung Guide."
+    }
+  : {
+      brandTagline: "Panduan pengunjung independen untuk Tanah Datar.",
+      privacy: "Kebijakan Privasi",
+      terms: "Syarat Layanan",
+      cookies: "Pengaturan Cookie",
+      privacyHref: "/privacy-policy/",
+      termsHref: "/terms-of-service/",
+      cookiesHref: "/cookie-settings/",
+      noteOne: "Situs ini adalah proyek panduan pengunjung independen dan nirlaba. Situs ini tidak berafiliasi dengan Istano Basa Pagaruyung, instansi pemerintah, atau operator komersial mana pun.",
+      noteTwo: "Informasi diringkas dari Indonesia Travel, Wikimedia Commons, Trip.com, Wikivoyage, dan sumber rujukan publik lainnya. Tidak ada rekomendasi bisnis spesifik.",
+      noteThree: "Foto tunduk pada hak cipta fotografer masing-masing; lihat kredit dan lisensi yang tercantum. © 2026 Panduan Istano Basa Pagaruyung."
+    };
+---
+
+<footer class="site-footer">
+  <div class="content-wrap footer-grid">
+    <div class="footer-brand">
+      <svg viewBox="0 0 54 44" aria-hidden="true">
+        <path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" />
+        <path d="M8 17 15 9l4 9M25 7l2-5 3 5M38 18l4-9 7 8" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" />
+      </svg>
+      <div>
+        <b>ISTANO BASA PAGARUYUNG</b>
+        <p>{footerCopy.brandTagline}</p>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href={footerCopy.privacyHref}>{footerCopy.privacy}</a>
+      <a href={footerCopy.termsHref}>{footerCopy.terms}</a>
+      <a href={footerCopy.cookiesHref}>{footerCopy.cookies}</a>
+    </div>
+    <div class="footer-note">
+      <p>{footerCopy.noteOne}</p>
+      <p>{footerCopy.noteTwo}</p>
+      <p>{footerCopy.noteThree}</p>
+    </div>
+  </div>
+</footer>

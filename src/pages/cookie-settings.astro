@@ -1,0 +1,26 @@
+---
+import CookieSettingsForm from "../components/CookieSettingsForm.astro";
+import LegalLayout from "../layouts/LegalLayout.astro";
+
+const title = "Pengaturan Cookie | Istano Basa Pagaruyung";
+const description = "Halaman pengaturan Cookie untuk mengelola persetujuan analitik dan preferensi lokal di situs panduan Istano Basa Pagaruyung.";
+---
+
+<LegalLayout
+  {title}
+  {description}
+  lang="id"
+  alternateHref="/en/cookie-settings/"
+  eyebrow="PENGATURAN COOKIE"
+  heading="Anda yang menentukan."
+  lead="Halaman ini menyediakan pengaturan persetujuan yang tersimpan langsung di browser Anda. Cookie atau penyimpanan esensial diperlukan agar preferensi ini tetap berlaku saat Anda kembali membuka situs."
+>
+  <section>
+    <h2>Cara kerja persetujuan</h2>
+    <p>Secara bawaan, situs ini hanya mengandalkan penyimpanan esensial untuk mengingat pilihan Anda. Analitik tidak dimuat sampai Anda menyalakannya sendiri. Tidak ada Cookie pemasaran yang digunakan.</p>
+  </section>
+
+  <section>
+    <CookieSettingsForm lang="id" />
+  </section>
+</LegalLayout>

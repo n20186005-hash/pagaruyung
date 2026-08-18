@@ -1,0 +1,111 @@
+---
+interface Props {
+  lang?: "id" | "en";
+}
+
+const { lang = "id" } = Astro.props;
+
+const copy = lang === "en"
+  ? {
+      settingsTitle: "Manage your consent on this device",
+      settingsText: "Essential storage keeps your choice available locally. Analytics loads only after you explicitly allow it. Marketing Cookies are not used on this site.",
+      essential: "Essential storage",
+      essentialText: "Required to remember your consent choices.",
+      analytics: "Analytics",
+      analyticsText: "Allows anonymous Google Analytics measurement after consent.",
+      preferences: "Preferences",
+      preferencesText: "Keeps display and interface choices on this device.",
+      save: "Save choices",
+      reject: "Reject analytics",
+      statusIdle: "Your current preference will be read from local storage when this page opens.",
+      statusSaved: "Your Cookie choices have been saved on this device.",
+      statusRejected: "Analytics consent has been turned off on this device."
+    }
+  : {
+      settingsTitle: "Kelola persetujuan di perangkat ini",
+      settingsText: "Penyimpanan esensial menjaga pilihan Anda tetap tersimpan secara lokal. Analitik hanya dimuat setelah Anda mengizinkannya secara eksplisit. Situs ini tidak menggunakan Cookie pemasaran.",
+      essential: "Penyimpanan esensial",
+      essentialText: "Diperlukan untuk mengingat pilihan persetujuan Anda.",
+      analytics: "Analitik",
+      analyticsText: "Mengizinkan pengukuran anonim Google Analytics setelah persetujuan diberikan.",
+      preferences: "Preferensi",
+      preferencesText: "Menyimpan pilihan tampilan dan antarmuka di perangkat ini.",
+      save: "Simpan pilihan",
+      reject: "Tolak analitik",
+      statusIdle: "Pilihan tersimpan saat ini akan dibaca dari penyimpanan lokal ketika halaman ini dibuka.",
+      statusSaved: "Pilihan Cookie Anda telah disimpan di perangkat ini.",
+      statusRejected: "Persetujuan analitik telah dimatikan di perangkat ini."
+    };
+---
+
+<div class="cookie-settings-panel">
+  <div>
+    <h2>{copy.settingsTitle}</h2>
+    <p>{copy.settingsText}</p>
+  </div>
+
+  <label class="cookie-row disabled">
+    <span>
+      <b>{copy.essential}</b>
+      <small>{copy.essentialText}</small>
+    </span>
+    <input type="checkbox" checked disabled />
+  </label>
+
+  <label class="cookie-row">
+    <span>
+      <b>{copy.analytics}</b>
+      <small>{copy.analyticsText}</small>
+    </span>
+    <input id="analytics-consent" type="checkbox" />
+  </label>
+
+  <label class="cookie-row">
+    <span>
+      <b>{copy.preferences}</b>
+      <small>{copy.preferencesText}</small>
+    </span>
+    <input id="preferences-consent" type="checkbox" checked />
+  </label>
+
+  <div class="cookie-actions">
+    <button class="button dark" type="button" data-save-cookie>{copy.save} <span>→</span></button>
+    <button class="button ghost" type="button" data-reject-cookie>{copy.reject}</button>
+  </div>
+
+  <p class="cookie-status" data-cookie-status>{copy.statusIdle}</p>
+</div>
+
+<script is:inline define:vars={{ statusSaved: copy.statusSaved, statusRejected: copy.statusRejected }}>
+  const cookieKey = "istano-pagaruyung-cookie-preferences";
+  const analytics = document.querySelector("#analytics-consent");
+  const preferences = document.querySelector("#preferences-consent");
+  const status = document.querySelector("[data-cookie-status]");
+
+  function applyPreferences(value) {
+    if (!(analytics instanceof HTMLInputElement) || !(preferences instanceof HTMLInputElement)) return;
+    analytics.checked = Boolean(value.analytics);
+    preferences.checked = value.preferences !== false;
+  }
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(cookieKey) || "null");
+    if (saved) applyPreferences(saved);
+  } catch {}
+
+  document.querySelector("[data-save-cookie]")?.addEventListener("click", () => {
+    if (!(analytics instanceof HTMLInputElement) || !(preferences instanceof HTMLInputElement)) return;
+    const value = { analytics: analytics.checked, preferences: preferences.checked };
+    localStorage.setItem(cookieKey, JSON.stringify(value));
+    if (value.analytics) window["__istanoLoadAnalytics"]?.();
+    if (status) status.textContent = statusSaved;
+  });
+
+  document.querySelector("[data-reject-cookie]")?.addEventListener("click", () => {
+    if (!(analytics instanceof HTMLInputElement) || !(preferences instanceof HTMLInputElement)) return;
+    analytics.checked = false;
+    const value = { analytics: false, preferences: preferences.checked };
+    localStorage.setItem(cookieKey, JSON.stringify(value));
+    if (status) status.textContent = statusRejected;
+  });
+</script>

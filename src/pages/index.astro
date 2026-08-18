@@ -1,4 +1,5 @@
 ---
+import SiteFooter from "../components/SiteFooter.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const title = "Istano Basa Pagaruyung | Panduan Pengunjung Tanah Datar";
@@ -120,52 +121,11 @@ const faqJsonLd = {
     <section id="faq" class="faq-section content-wrap section-spacing"><div class="section-label"><span>07</span> PERTANYAAN UMUM</div><div class="faq-grid"><h2>Hal yang sering ditanyakan sebelum berangkat.</h2><div class="faq-list">{faq.map((item) => <details><summary>{item.q}<span>+</span></summary><p>{item.a}</p></details>)}</div></div></section>
   </main>
 
-  <footer class="site-footer"><div class="content-wrap footer-grid"><div class="footer-brand"><svg viewBox="0 0 54 44" aria-hidden="true"><path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" /><path d="M8 17 15 9l4 9M25 7l2-5 3 5M38 18l4-9 7 8" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" /></svg><div><b>ISTANO BASA PAGARUYUNG</b><p>Panduan pengunjung independen untuk Tanah Datar.</p></div></div><div class="footer-links"><button data-open-dialog="privacy">Kebijakan Privasi</button><button data-open-dialog="terms">Syarat Layanan</button><button data-open-dialog="cookies">Pengaturan Cookie</button></div><div class="footer-note"><p>Situs ini adalah proyek panduan pengunjung independen dan nirlaba. Situs ini tidak berafiliasi dengan Istano Basa Pagaruyung, instansi pemerintah, atau operator komersial mana pun.</p><p>Informasi diringkas dari Indonesia Travel, Wikimedia Commons, Trip.com, Wikivoyage, dan sumber rujukan publik lainnya. Tidak ada rekomendasi bisnis spesifik.</p><p>Foto tunduk pada hak cipta fotografer masing-masing; lihat kredit dan lisensi yang tercantum. © 2026 Panduan Istano Basa Pagaruyung.</p></div></div></footer>
-
-  <dialog data-dialog="privacy"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Tutup">×</button><p class="eyebrow">KEBIJAKAN PRIVASI · AGUSTUS 2026</p><h2>Data minimum, penjelasan terbuka.</h2><p>Kami hanya mengumpulkan data yang diperlukan untuk menjalankan situs, seperti data penjelajahan dasar, pilihan Cookie, dan informasi yang Anda kirimkan secara sukarela melalui kanal kontak.</p><h3>Penggunaan & layanan pihak ketiga</h3><p>Data dapat digunakan untuk memahami penggunaan situs, meningkatkan konten, menanggapi permintaan, dan memenuhi kewajiban hukum. Situs ini dapat memakai Google Maps untuk peta serta Google Analytics untuk statistik anonim, hanya bila persetujuan analitik diberikan.</p><h3>Hak Anda</h3><p>Anda dapat meminta akses, perbaikan, atau penghapusan data pribadi yang relevan, serta mengajukan keberatan sesuai peraturan yang berlaku.</p></article></dialog>
-  <dialog data-dialog="terms"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Tutup">×</button><p class="eyebrow">SYARAT LAYANAN · AGUSTUS 2026</p><h2>Gunakan sebagai panduan, bukan pengganti verifikasi.</h2><p>Seluruh konten disediakan untuk informasi umum. Kami adalah panduan wisata independen, bukan perwakilan resmi tempat wisata, pemerintah, atau usaha mana pun.</p><h3>Ketepatan informasi</h3><p>Kami berupaya menggunakan sumber publik yang dapat ditelusuri, tetapi jadwal, layanan, tarif, akses, dan kondisi perjalanan dapat berubah. Konfirmasikan informasi penting kepada kanal resmi atau petugas di lokasi sebelum membuat keputusan perjalanan.</p><h3>Hak cipta & tanggung jawab</h3><p>Desain dan naskah situs dilindungi hak cipta. Foto mematuhi lisensi yang dicantumkan. Situs disediakan apa adanya tanpa jaminan atas kerugian yang timbul dari keputusan perjalanan.</p></article></dialog>
-  <dialog data-dialog="cookies"><article class="policy-dialog cookie-dialog"><button class="dialog-close" data-close-dialog aria-label="Tutup">×</button><p class="eyebrow">PENGATURAN COOKIE</p><h2>Anda yang menentukan.</h2><p>Cookie esensial diperlukan agar pengaturan ini berfungsi. Cookie analitik hanya digunakan bila Anda mengizinkannya. Tidak ada Cookie pemasaran pada situs ini.</p><label class="cookie-row disabled"><span><b>Cookie esensial</b><small>Diperlukan untuk menyimpan pilihan Anda.</small></span><input type="checkbox" checked disabled /></label><label class="cookie-row"><span><b>Analitik</b><small>Membantu memahami penggunaan situs secara anonim melalui Google Analytics.</small></span><input id="analytics-consent" type="checkbox" /></label><label class="cookie-row"><span><b>Preferensi</b><small>Menyimpan pilihan tampilan dan Cookie di perangkat ini.</small></span><input id="preferences-consent" type="checkbox" checked /></label><div class="cookie-actions"><button class="button dark" data-save-cookie>Simpan pilihan <span>→</span></button><button class="button ghost" data-reject-cookie>Tolak analitik</button></div></article></dialog>
+  <SiteFooter lang="id" />
 
   <script is:inline>
-    const cookieKey = "istano-pagaruyung-cookie-preferences";
-    const dialogButtons = document.querySelectorAll("[data-open-dialog]");
-    const dialogs = document.querySelectorAll("dialog[data-dialog]");
-    const closeButtons = document.querySelectorAll("[data-close-dialog]");
     const menuButton = document.querySelector("[data-menu-button]");
     const menu = document.querySelector("[data-menu]");
-    const analytics = document.querySelector("#analytics-consent");
-    const preferences = document.querySelector("#preferences-consent");
-    let gaLoaded = false;
-
-    function loadAnalytics() {
-      if (gaLoaded) return;
-      gaLoaded = true;
-      const external = document.createElement("script");
-      external.async = true;
-      external.src = "https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP";
-      document.head.append(external);
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ window.dataLayer.push(arguments); }
-      gtag("js", new Date());
-      gtag("config", "G-HXM22WWPKP", { anonymize_ip: true });
-    }
-
-    function applyPreferences(value) {
-      analytics.checked = Boolean(value.analytics);
-      preferences.checked = value.preferences !== false;
-      if (value.analytics) loadAnalytics();
-    }
-
-    try {
-      const saved = JSON.parse(localStorage.getItem(cookieKey) || "null");
-      if (saved) applyPreferences(saved);
-    } catch {}
-
-    dialogButtons.forEach((button) => button.addEventListener("click", () => document.querySelector(`[data-dialog="${button.dataset.openDialog}"]`)?.showModal()));
-    closeButtons.forEach((button) => button.addEventListener("click", () => button.closest("dialog")?.close()));
-    dialogs.forEach((dialog) => dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); }));
-    document.querySelector("[data-save-cookie]")?.addEventListener("click", () => { const value = { analytics: analytics.checked, preferences: preferences.checked }; localStorage.setItem(cookieKey, JSON.stringify(value)); if (value.analytics) loadAnalytics(); document.querySelector('[data-dialog="cookies"]')?.close(); });
-    document.querySelector("[data-reject-cookie]")?.addEventListener("click", () => { localStorage.setItem(cookieKey, JSON.stringify({ analytics: false, preferences: preferences.checked })); analytics.checked = false; document.querySelector('[data-dialog="cookies"]')?.close(); });
     menuButton?.addEventListener("click", () => { const open = menu.classList.toggle("open"); menuButton.setAttribute("aria-expanded", String(open)); });
     menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => { menu.classList.remove("open"); menuButton?.setAttribute("aria-expanded", "false"); }));
   </script>
