@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "istano-basa-pagaruyung-guide",
+  "compatibility_date": "2026-08-18",
+  "main": "src/worker.ts",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
