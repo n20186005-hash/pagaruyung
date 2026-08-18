@@ -1,0 +1,122 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const title = "Istano Basa Pagaruyung | Tanah Datar Visitor Guide";
+const description = "An independent English visitor guide to Istano Basa Pagaruyung in Tanah Datar, West Sumatra.";
+const configuredPageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const structuredImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", Astro.site).href : "/images/istano-basa-pagaruyung-hero.jpg";
+const mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6893.632550900992!2d100.61882997686912!3d-0.47129103528237476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2ad2d2be29c7dd%3A0xb19e3eb230efffbc!2sIstano%20Basa%20Pagaruyung!5e1!3m2!1sen!2sid!4v1787020204709!5m2!1sen!2sid";
+
+const faq = [
+  { q: "When is Istano Basa Pagaruyung open?", a: "Several travel references list visiting hours as 08:00–18:00. Hours can change for customary events, maintenance, or local conditions, so please confirm before you travel." },
+  { q: "How long should I allow for a visit?", a: "Allow around 1–3 hours to explore the main building, take photographs, and understand the cultural context. Add time if you are combining the visit with other cultural sites in Tanah Datar." },
+  { q: "How can I get there without a private vehicle?", a: "Plan your main journey to Batusangkar first. From there, use local transport, a taxi, or an ojek for the final part of the trip. Ask about availability and fares before setting off." },
+  { q: "Is there a dress code?", a: "Wear modest, comfortable clothing suited to the weather. Follow staff guidance at the site, including any instructions about footwear or restricted areas." },
+  { q: "Are entrance fees and facilities always the same?", a: "No. Admission charges, costume rental, parking, and supporting facilities may change. Use information at the ticket counter and official local channels as your final reference." }
+];
+
+const attractionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  name: "Istano Basa Pagaruyung",
+  description,
+  image: structuredImage,
+  ...(configuredPageUrl ? { url: configuredPageUrl } : {}),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Jl. Sutan Alam Bagagarsyah, Pagaruyung, Tanjung Emas District",
+    addressLocality: "Tanah Datar Regency",
+    addressRegion: "West Sumatra",
+    postalCode: "27281",
+    addressCountry: "ID"
+  },
+  geo: { "@type": "GeoCoordinates", latitude: -0.47129103528237476, longitude: 100.61882997686912 },
+  openingHoursSpecification: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((dayOfWeek) => ({ "@type": "OpeningHoursSpecification", dayOfWeek, opens: "08:00", closes: "18:00" })),
+  aggregateRating: { "@type": "AggregateRating", ratingValue: "4.7", reviewCount: "17648", bestRating: "5" }
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({ "@type": "Question", name: item.q, acceptedAnswer: { "@type": "Answer", text: item.a } }))
+};
+---
+
+<BaseLayout {title} {description} lang="en" alternateHref="/" alternateLang="id">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <header class="site-header" id="home">
+    <a class="brand" href="#home" aria-label="Istano Basa Pagaruyung — Home">
+      <svg class="brand-mark" viewBox="0 0 54 44" aria-hidden="true"><path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" /><path d="M8 17 15 9l4 9 8-18 8 18 4-10 8 10" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" /></svg>
+      <span><b>ISTANO BASA</b><small>PAGARUYUNG · TANAH DATAR</small></span>
+    </a>
+    <button class="menu-button" aria-label="Open menu" aria-expanded="false" data-menu-button><span></span><span></span></button>
+    <nav class="site-nav" data-menu aria-label="Main navigation">
+      <a href="#about">About</a><a href="#visit">Visit</a><a href="#access">Access</a><a href="#nearby">Nearby</a><a href="#faq">FAQ</a>
+      <a class="nav-map" href="#map">View map <span>↗</span></a>
+      <div class="language-switch" aria-label="Choose language"><a href="/" lang="id">ID</a><a class="active" href="/en/" aria-current="page">EN</a></div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="/images/istano-basa-pagaruyung-hero.jpg" alt="Istano Basa Pagaruyung with its distinctive Minangkabau gonjong roofs" />
+      <div class="hero-shade"></div>
+      <div class="hero-content content-wrap">
+        <p class="kicker light"><span></span> TANAH DATAR · WEST SUMATRA</p>
+        <h1 id="hero-title">Beneath the<br /><em>gonjong</em> that<br />holds memory.</h1>
+        <p class="hero-text">An independent guide to Istano Basa Pagaruyung — a Minangkabau cultural space, a historical trace, and a visitor experience in the heart of Tanah Datar.</p>
+        <div class="hero-actions"><a class="button gold" href="#visit">Plan your visit <span>↓</span></a><a class="text-link light" href="#about">Discover the istano <span>→</span></a></div>
+      </div>
+      <div class="hero-metrics"><div><strong>08:00–18:00</strong><span>listed visiting hours</span></div><div><strong>1–3 hours</strong><span>suggested exploration time</span></div><div><strong>4.7 / 5</strong><span>public review rating*</span></div></div>
+      <p class="hero-credit">Photo: Adhmi / Wikimedia Commons · CC BY-SA 4.0</p>
+    </section>
+
+    <section id="about" class="intro-section content-wrap section-spacing">
+      <div class="section-label"><span>01</span> AN ISTANO, NOT JUST A BUILDING</div>
+      <div class="intro-grid"><div><h2>Where custom, governance, and memory meet.</h2></div><div class="body-copy"><p>Istano Basa Pagaruyung is one of the most important cultural markers of Minangkabau. As a special museum managed in Tanah Datar, it helps visitors read the region’s customs, Rumah Gadang architecture, and the ideas of leadership that once linked this area.</p><p>In the Pagaruyung tradition, <i>Rajo Tigo Selo</i> refers to three roles: Raja Alam, Raja Adat, and Raja Ibadat. Together, they are often understood as the meeting point of governance, customary law, and religious values.</p></div></div>
+      <div class="photo-split"><figure class="large"><img src="/images/rumah-gadang-detail.jpg" alt="Façade and roof detail of a Rumah Gadang at Istano Basa Pagaruyung" /><figcaption>Rumah Gadang architecture: the gonjong roof form recalls buffalo horns in Minangkabau tradition.</figcaption></figure><div class="history-card"><p class="eyebrow">THROUGH TIME</p><h3>Lost to fire, rebuilt, and continuously cared for.</h3><ol><li><b>1804</b><span>An earlier istano was destroyed by fire and later rebuilt.</span></li><li><b>1966</b><span>The building was again lost to fire.</span></li><li><b>1976</b><span>A major reconstruction began at the current location, south of the former site.</span></li></ol><p class="source-note">This historical overview refers to Indonesia Travel. The building visited today is a reconstruction and cultural museum.</p></div></div>
+    </section>
+
+    <section id="visit" class="visit-section section-spacing"><div class="content-wrap"><div class="section-label light"><span>02</span> VISITOR GUIDE</div><div class="visit-heading"><h2>Arrive curious,<br /><em>leave with context.</em></h2><p>Use this section as an initial orientation. On-site operations may change; verify important information before your journey.</p></div><div class="visit-cards"><article><span class="icon">◷</span><h3>Best time</h3><p>Morning light is gentler for seeing the gonjong forms and walking around the grounds. Arrive early if you prefer a quieter rhythm of visit.</p></article><article><span class="icon">◎</span><h3>Suggested duration</h3><p>Set aside 1–3 hours for the main building, the outdoor area, photographs, and cultural context. Add time if you are continuing to Batusangkar or nearby sites.</p></article><article><span class="icon">Rp</span><h3>Tickets & costs</h3><p>Admission fees and supporting services can change. Check the information board and ticket counter on the day; do not rely solely on old travel-blog prices.</p></article><article><span class="icon">↟</span><h3>At the istano</h3><p>Dress modestly, follow staff directions, and respect restricted areas. Ask first before using traditional costumes or photography services on site.</p></article></div></div></section>
+
+    <section id="access" class="access-section content-wrap section-spacing"><div class="section-label"><span>03</span> REACHING PAGARUYUNG</div><div class="access-grid"><div><h2>The journey ends in Batusangkar; from there, the istano is close.</h2><p class="body-copy lead">The istano is in Nagari Pagaruyung, Tanjung Emas District, Tanah Datar Regency. Plan the main part of your journey to Batusangkar first, then arrange transport for the final stage.</p><a class="button dark" href="#map">Open location in map <span>↘</span></a></div><div class="route-list"><article><span>01</span><div><h3>From the airport</h3><p>Minangkabau International Airport is an air gateway to the Padang area. Continue to Tanah Datar by scheduled ground transport, a hired vehicle, or a pre-arranged journey. Check route conditions and travel time when planning.</p></div></article><article><span>02</span><div><h3>Bus & local transport</h3><p>For a lower-cost option, look for transport to Batusangkar from connecting towns such as Padang Panjang or Bukittinggi. Local schedules can change, so ask directly about destination and departure time.</p></div></article><article><span>03</span><div><h3>Taxi, ojek & hired car</h3><p>From Batusangkar, continue by taxi, ojek, or a hired vehicle. Agree on the destination, fare, and waiting time before the trip, especially if you need to return to town on the same day.</p></div></article></div></div><div class="facility-strip"><div><b>Parking</b><span>Follow parking-area directions and on-site staff guidance.</span></div><div><b>Toilets</b><span>Ask for the location of public facilities when you arrive.</span></div><div><b>Food & drinks</b><span>Find snacks and local food options around the visitor area.</span></div><div><b>Travel essentials</b><span>Accommodation, everyday shops, and fuel services are available around Batusangkar according to your route.</span></div></div></section>
+
+    <section id="map" class="map-section"><div class="map-copy"><p class="section-label light"><span>04</span> FIND THE LOCATION</p><h2>Istano Basa<br />Pagaruyung</h2><p>Jl. Sutan Alam Bagagarsyah<br />Pagaruyung, Tanjung Emas District<br />Tanah Datar Regency, West Sumatra 27281</p><a href="https://www.google.com/maps/dir/?api=1&destination_place_id=ChIJ3ccpvtLSKi4RvP_vMLI-nrE&destination=Istano%20Basa%20Pagaruyung" target="_blank" rel="noreferrer">Get directions <span>↗</span></a></div><iframe src={mapEmbed} title="Map location of Istano Basa Pagaruyung" width="600" height="450" style="border:0" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></section>
+
+    <section id="nearby" class="around-section content-wrap section-spacing"><div class="section-label"><span>05</span> CONTINUE EXPLORING</div><div class="around-heading"><h2>Tanah Datar does not end<br />on one page.</h2><p>Build a visit that brings together culture, landscape, and time to enjoy local food. The names below are area context and destination categories, not commercial endorsements.</p></div><div class="around-grid"><article class="feature-card"><img src="/images/istana-pagaruyung-detail.jpg" alt="Istano Basa Pagaruyung viewed from another angle" /><div><p class="eyebrow">CULTURE NEARBY</p><h3>Pagaruyung Inscription Site</h3><p>Add the inscription site for a deeper reading of the kingdom’s history in the Pagaruyung area.</p></div></article><div class="nearby-list"><article><span>01</span><div><h3>Istano Silinduang Bulan</h3><p>Another Rumah Gadang in the Pagaruyung area, offering additional architectural and local historical context.</p></div></article><article><span>02</span><div><h3>Batusangkar</h3><p>Use the town as a stop for travel needs, meals, accommodation, and onward access to Tanah Datar attractions.</p></div></article><article><span>03</span><div><h3>Lake Singkarak & Minangkabau landscapes</h3><p>If your route allows, continue to other natural and cultural destinations in West Sumatra. Check weather and access before departure.</p></div></article></div></div><div class="food-guide"><div><p class="eyebrow">NEUTRAL OPTIONS</p><h3>For a pause on the road</h3></div><p><b>Food:</b> look for Minang restaurants, local food stalls, traditional snacks, or drinks that suit your preferences and dietary needs.</p><p><b>Stay:</b> consider a hotel, guesthouse, or homestay in Batusangkar if you would like to explore Tanah Datar at a slower pace.</p><p><b>Small supplies:</b> choose markets, kiosks, or everyday shops for drinking water and travel basics. Do not rely on a single named business.</p></div></section>
+
+    <section class="gallery-section"><div class="content-wrap"><div class="section-label light"><span>06</span> READING THE DETAIL</div><h2>Wood, line, sky,<br />and a living heritage.</h2><div class="gallery-grid"><figure><img src="/images/istano-rajo-basa.jpg" alt="Istano Basa Pagaruyung viewed from the outdoor grounds" /><figcaption>The istano’s outdoor space and roofline silhouette.</figcaption></figure><figure><img src="/images/rumah-gadang-detail.jpg" alt="Rumah Gadang detail at Istano Basa Pagaruyung" /><figcaption>Ornament and structure of the Rumah Gadang.</figcaption></figure></div><div class="image-credits"><p class="eyebrow">PHOTO CREDITS</p><ul><li><a href="https://commons.wikimedia.org/wiki/File:Istano_Basa_Pagaruyung.jpg" target="_blank" rel="noreferrer">Istano Basa Pagaruyung</a> — Adhmi, CC BY-SA 4.0.</li><li><a href="https://commons.wikimedia.org/wiki/File:Rumah_Gadang,_Istano_Basa_Pagaruyung.jpg" target="_blank" rel="noreferrer">Rumah Gadang, Istano Basa Pagaruyung</a> — Ichan.dgmc, CC BY-SA 4.0.</li><li><a href="https://commons.wikimedia.org/wiki/File:Istana_Pagaruyung_17.jpg" target="_blank" rel="noreferrer">Istana Pagaruyung 17</a> — Indonesia Ministry of Public Works, public domain.</li><li><a href="https://commons.wikimedia.org/wiki/File:Istano_Rajo_Basa_Pagaruyung.jpg" target="_blank" rel="noreferrer">Istano Rajo Basa Pagaruyung</a> — Herusutimbul, CC BY-SA 4.0.</li></ul></div></div></section>
+
+    <section id="faq" class="faq-section content-wrap section-spacing"><div class="section-label"><span>07</span> FREQUENTLY ASKED QUESTIONS</div><div class="faq-grid"><h2>Questions often asked before the trip.</h2><div class="faq-list">{faq.map((item) => <details><summary>{item.q}<span>+</span></summary><p>{item.a}</p></details>)}</div></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="content-wrap footer-grid"><div class="footer-brand"><svg viewBox="0 0 54 44" aria-hidden="true"><path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" /><path d="M8 17 15 9l4 9 8-18 8 18 4-10 8 10" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" /></svg><div><b>ISTANO BASA PAGARUYUNG</b><p>An independent visitor guide to Tanah Datar.</p></div></div><div class="footer-links"><button data-open-dialog="privacy">Privacy Policy</button><button data-open-dialog="terms">Terms of Service</button><button data-open-dialog="cookies">Cookie Settings</button></div><div class="footer-note"><p>This is an independent, non-profit visitor-information guide. It is not affiliated with Istano Basa Pagaruyung, any government body, or any commercial operator.</p><p>Information is summarised from Indonesia Travel, Wikimedia Commons, Trip.com, Wikivoyage, and other public reference sources. No specific business is recommended.</p><p>Photos remain subject to the copyright of their respective photographers; see the credits and licences shown. © 2026 Istano Basa Pagaruyung Guide.</p></div></div></footer>
+
+  <dialog data-dialog="privacy"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">PRIVACY POLICY · AUGUST 2026</p><h2>Minimal data, clear explanation.</h2><p>We only collect the data needed to run this site, such as basic browsing data, Cookie choices, and information you voluntarily provide through a contact channel.</p><h3>Use and third-party services</h3><p>Data may be used to understand site use, improve content, respond to requests, and meet legal obligations. This site may use Google Maps for maps and Google Analytics for anonymous statistics only when analytical consent is granted.</p><h3>Your rights</h3><p>You may request access to, correction of, or deletion of relevant personal data, and may object in accordance with applicable regulations.</p></article></dialog>
+  <dialog data-dialog="terms"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">TERMS OF SERVICE · AUGUST 2026</p><h2>Use this as a guide, not a substitute for verification.</h2><p>All content is provided for general information. We are an independent travel guide, not an official representative of the attraction, government, or any business.</p><h3>Accuracy of information</h3><p>We aim to use traceable public sources, but schedules, services, prices, access, and travel conditions may change. Confirm important information with official channels or on-site staff before making travel decisions.</p><h3>Copyright and liability</h3><p>The site design and original writing are protected by copyright. Photos follow the licences shown. This site is provided as is, without warranty for losses arising from travel decisions.</p></article></dialog>
+  <dialog data-dialog="cookies"><article class="policy-dialog cookie-dialog"><button class="dialog-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">COOKIE SETTINGS</p><h2>You decide.</h2><p>Essential Cookies are needed for these settings to work. Analytics Cookies are used only if you allow them. This site does not use marketing Cookies.</p><label class="cookie-row disabled"><span><b>Essential Cookies</b><small>Needed to remember your choices.</small></span><input type="checkbox" checked disabled /></label><label class="cookie-row"><span><b>Analytics</b><small>Helps us understand anonymous site use through Google Analytics.</small></span><input id="analytics-consent" type="checkbox" /></label><label class="cookie-row"><span><b>Preferences</b><small>Saves display and Cookie choices on this device.</small></span><input id="preferences-consent" type="checkbox" checked /></label><div class="cookie-actions"><button class="button dark" data-save-cookie>Save choices <span>→</span></button><button class="button ghost" data-reject-cookie>Reject analytics</button></div></article></dialog>
+
+  <script is:inline>
+    const cookieKey = "istano-pagaruyung-cookie-preferences";
+    const dialogButtons = document.querySelectorAll("[data-open-dialog]");
+    const dialogs = document.querySelectorAll("dialog[data-dialog]");
+    const closeButtons = document.querySelectorAll("[data-close-dialog]");
+    const menuButton = document.querySelector("[data-menu-button]");
+    const menu = document.querySelector("[data-menu]");
+    const analytics = document.querySelector("#analytics-consent");
+    const preferences = document.querySelector("#preferences-consent");
+    let gaLoaded = false;
+    function loadAnalytics() { if (gaLoaded) return; gaLoaded = true; const external = document.createElement("script"); external.async = true; external.src = "https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"; document.head.append(external); window.dataLayer = window.dataLayer || []; function gtag(){ window.dataLayer.push(arguments); } gtag("js", new Date()); gtag("config", "G-HXM22WWPKP", { anonymize_ip: true }); }
+    function applyPreferences(value) { analytics.checked = Boolean(value.analytics); preferences.checked = value.preferences !== false; if (value.analytics) loadAnalytics(); }
+    try { const saved = JSON.parse(localStorage.getItem(cookieKey) || "null"); if (saved) applyPreferences(saved); } catch {}
+    dialogButtons.forEach((button) => button.addEventListener("click", () => document.querySelector(`[data-dialog="${button.dataset.openDialog}"]`)?.showModal()));
+    closeButtons.forEach((button) => button.addEventListener("click", () => button.closest("dialog")?.close()));
+    dialogs.forEach((dialog) => dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); }));
+    document.querySelector("[data-save-cookie]")?.addEventListener("click", () => { const value = { analytics: analytics.checked, preferences: preferences.checked }; localStorage.setItem(cookieKey, JSON.stringify(value)); if (value.analytics) loadAnalytics(); document.querySelector('[data-dialog="cookies"]')?.close(); });
+    document.querySelector("[data-reject-cookie]")?.addEventListener("click", () => { localStorage.setItem(cookieKey, JSON.stringify({ analytics: false, preferences: preferences.checked })); analytics.checked = false; document.querySelector('[data-dialog="cookies"]')?.close(); });
+    menuButton?.addEventListener("click", () => { const open = menu.classList.toggle("open"); menuButton.setAttribute("aria-expanded", String(open)); });
+    menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => { menu.classList.remove("open"); menuButton?.setAttribute("aria-expanded", "false"); }));
+  </script>
+</BaseLayout>

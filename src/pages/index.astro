@@ -1,0 +1,172 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Istano Basa Pagaruyung | Panduan Pengunjung Tanah Datar";
+const description = "Panduan independen berbahasa Indonesia untuk merencanakan kunjungan ke Istano Basa Pagaruyung di Tanah Datar, Sumatera Barat.";
+const configuredPageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const structuredImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", Astro.site).href : "/images/istano-basa-pagaruyung-hero.jpg";
+
+const mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6893.632550900992!2d100.61882997686912!3d-0.47129103528237476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2ad2d2be29c7dd%3A0xb19e3eb230efffbc!2sIstano%20Basa%20Pagaruyung!5e1!3m2!1sid!2sid!4v1787020204709!5m2!1sid!2sid";
+
+const faq = [
+  { q: "Kapan Istano Basa Pagaruyung dibuka?", a: "Sejumlah panduan mencantumkan jam kunjungan 08.00–18.00. Karena jam dapat berubah untuk kegiatan adat, pemeliharaan, atau kondisi setempat, konfirmasikan kembali sebelum berangkat." },
+  { q: "Berapa lama waktu yang ideal untuk berkunjung?", a: "Sediakan sekitar 1–3 jam untuk menjelajahi bangunan utama, berfoto di kawasan, dan memahami konteks budaya. Tambahkan waktu bila menggabungkan kunjungan dengan situs budaya lain di Tanah Datar." },
+  { q: "Bagaimana cara mencapai lokasi tanpa kendaraan pribadi?", a: "Rencanakan perjalanan menuju Batusangkar terlebih dahulu. Dari sana, gunakan angkutan lokal, taksi, atau ojek untuk tahap akhir menuju kawasan Istano. Tanyakan ketersediaan dan tarif sebelum berangkat." },
+  { q: "Apakah ada aturan berpakaian?", a: "Kenakan pakaian yang sopan, nyaman, dan sesuai cuaca. Ikuti petunjuk petugas di lokasi, termasuk ketentuan alas kaki atau area yang tidak dapat diakses pengunjung." },
+  { q: "Apakah tarif masuk dan fasilitas selalu sama?", a: "Tidak. Tarif, layanan sewa busana, parkir, maupun fasilitas pendukung dapat berubah. Gunakan informasi di loket dan kanal resmi setempat sebagai rujukan akhir." }
+];
+
+const attractionJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  name: "Istano Basa Pagaruyung",
+  description,
+  image: structuredImage,
+  ...(configuredPageUrl ? { url: configuredPageUrl } : {}),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Jl. Sutan Alam Bagagarsyah, Pagaruyung, Kec. Tanjung Emas",
+    addressLocality: "Kabupaten Tanah Datar",
+    addressRegion: "Sumatera Barat",
+    postalCode: "27281",
+    addressCountry: "ID"
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -0.47129103528237476,
+    longitude: 100.61882997686912
+  },
+  openingHoursSpecification: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((dayOfWeek) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek,
+    opens: "08:00",
+    closes: "18:00"
+  })),
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.7",
+    reviewCount: "17648",
+    bestRating: "5"
+  }
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a }
+  }))
+};
+---
+
+<BaseLayout {title} {description} lang="id" alternateHref="/en/" alternateLang="en">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <header class="site-header" id="beranda">
+    <a class="brand" href="#beranda" aria-label="Istano Basa Pagaruyung — Beranda">
+      <svg class="brand-mark" viewBox="0 0 54 44" aria-hidden="true"><path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" /><path d="M8 17 15 9l4 9M25 7l2-5 3 5M38 18l4-9 7 8" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" /></svg>
+      <span><b>ISTANO BASA</b><small>PAGARUYUNG · TANAH DATAR</small></span>
+    </a>
+    <button class="menu-button" aria-label="Buka menu" aria-expanded="false" data-menu-button><span></span><span></span></button>
+    <nav class="site-nav" data-menu aria-label="Navigasi utama">
+      <a href="#tentang">Tentang</a><a href="#kunjungan">Kunjungan</a><a href="#akses">Akses</a><a href="#sekitar">Di Sekitar</a><a href="#faq">FAQ</a>
+      <a class="nav-map" href="#peta">Lihat peta <span>↗</span></a>
+      <div class="language-switch" aria-label="Pilih bahasa"><a class="active" href="/" aria-current="page">ID</a><a href="/en/" lang="en">EN</a></div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-image" src="/images/istano-basa-pagaruyung-hero.jpg" alt="Istano Basa Pagaruyung dengan atap gonjong khas Minangkabau" />
+      <div class="hero-shade"></div>
+      <div class="hero-content content-wrap">
+        <p class="kicker light"><span></span> TANAH DATAR · SUMATERA BARAT</p>
+        <h1 id="hero-title">Di bawah<br /><em>gonjong</em> yang<br />menjaga ingatan.</h1>
+        <p class="hero-text">Panduan mandiri untuk mengenal Istano Basa Pagaruyung — ruang budaya Minangkabau, jejak sejarah, dan pengalaman berkunjung di jantung Tanah Datar.</p>
+        <div class="hero-actions"><a class="button gold" href="#kunjungan">Rencanakan kunjungan <span>↓</span></a><a class="text-link light" href="#tentang">Kenali istano <span>→</span></a></div>
+      </div>
+      <div class="hero-metrics"><div><strong>08.00–18.00</strong><span>jam rujukan kunjungan</span></div><div><strong>1–3 jam</strong><span>saran durasi jelajah</span></div><div><strong>4,7 / 5</strong><span>peringkat ulasan publik*</span></div></div>
+      <p class="hero-credit">Foto: Adhmi / Wikimedia Commons · CC BY-SA 4.0</p>
+    </section>
+
+    <section id="tentang" class="intro-section content-wrap section-spacing">
+      <div class="section-label"><span>01</span> SEBUAH ISTANO, BUKAN SEKADAR BANGUNAN</div>
+      <div class="intro-grid"><div><h2>Tempat di mana adat, pemerintahan, dan memori bertemu.</h2></div><div class="body-copy"><p>Istano Basa Pagaruyung merupakan salah satu penanda budaya terpenting Minangkabau. Sebagai museum khusus yang dikelola di Tanah Datar, istano ini membantu pengunjung membaca kembali adat, arsitektur Rumah Gadang, dan gagasan kepemimpinan yang pernah menghubungkan kawasan ini.</p><p>Di dalam tradisi Pagaruyung, <i>Rajo Tigo Selo</i> merujuk pada tiga peran: Raja Alam, Raja Adat, dan Raja Ibadat. Susunan ini sering dipahami sebagai perjumpaan antara pemerintahan, adat, dan nilai keagamaan.</p></div></div>
+      <div class="photo-split"><figure class="large"><img src="/images/rumah-gadang-detail.jpg" alt="Detail fasad dan atap Rumah Gadang di kawasan Istano Basa Pagaruyung" /><figcaption>Arsitektur Rumah Gadang: bentuk atap gonjong mengingatkan pada tanduk kerbau dalam tradisi Minangkabau.</figcaption></figure><div class="history-card"><p class="eyebrow">LINTAS WAKTU</p><h3>Terbakar, dibangun kembali, dan terus dirawat.</h3><ol><li><b>1804</b><span>Istano terdahulu mengalami kebakaran, lalu dibangun kembali.</span></li><li><b>1966</b><span>Bangunan kembali musnah akibat kebakaran.</span></li><li><b>1976</b><span>Rekonstruksi besar dimulai di lokasi saat ini, di selatan situs lama.</span></li></ol><p class="source-note">Ringkasan sejarah merujuk pada Indonesia Travel. Bangunan yang dikunjungi hari ini merupakan rekonstruksi dan museum budaya.</p></div></div>
+    </section>
+
+    <section id="kunjungan" class="visit-section section-spacing">
+      <div class="content-wrap"><div class="section-label light"><span>02</span> PANDUAN KUNJUNGAN</div><div class="visit-heading"><h2>Datang dengan rasa ingin tahu,<br /><em>pulang dengan konteks.</em></h2><p>Gunakan bagian ini sebagai orientasi awal. Kondisi operasional di lapangan dapat berubah; verifikasi informasi penting sebelum perjalanan.</p></div><div class="visit-cards"><article><span class="icon">◷</span><h3>Waktu terbaik</h3><p>Pagi hari memberi cahaya yang lebih lembut untuk melihat bentuk gonjong dan berjalan di kawasan. Datanglah lebih awal bila ingin ritme kunjungan yang lebih tenang.</p></article><article><span class="icon">◎</span><h3>Durasi yang disarankan</h3><p>Sisihkan 1–3 jam untuk bangunan utama, area luar, foto, dan membaca konteks budaya. Tambahkan waktu bila melanjutkan ke Batusangkar atau situs sekitar.</p></article><article><span class="icon">Rp</span><h3>Tiket & biaya</h3><p>Tarif masuk serta biaya layanan pendukung dapat berubah. Periksa papan informasi dan loket setempat pada hari kunjungan; jangan mengandalkan angka lama dari blog perjalanan.</p></article><article><span class="icon">↟</span><h3>Etika di istano</h3><p>Berpakaian sopan, ikuti arahan petugas, dan hormati area yang dibatasi. Tanyakan dahulu sebelum menggunakan busana adat atau layanan foto di lokasi.</p></article></div></div>
+    </section>
+
+    <section id="akses" class="access-section content-wrap section-spacing">
+      <div class="section-label"><span>03</span> MENUJU PAGARUYUNG</div>
+      <div class="access-grid"><div><h2>Perjalanan berakhir di Batusangkar; dari sana, istano sudah dekat.</h2><p class="body-copy lead">Istano berada di Nagari Pagaruyung, Kecamatan Tanjung Emas, Kabupaten Tanah Datar. Rencanakan moda utama hingga Batusangkar terlebih dahulu, kemudian siapkan transportasi untuk tahap akhir perjalanan.</p><a class="button dark" href="#peta">Buka lokasi di peta <span>↘</span></a></div><div class="route-list"><article><span>01</span><div><h3>Dari bandara</h3><p>Bandara Internasional Minangkabau melayani pintu masuk udara kawasan Padang. Untuk menuju Tanah Datar, lanjutkan melalui kendaraan darat terjadwal, sewaan, atau perjalanan yang telah diatur sebelumnya. Periksa kondisi rute dan waktu tempuh saat merencanakan perjalanan.</p></div></article><article><span>02</span><div><h3>Bus & angkutan lokal</h3><p>Untuk pilihan hemat, cari rute menuju Batusangkar dari kota-kota penghubung seperti Padang Panjang atau Bukittinggi. Angkutan lokal dapat memiliki jadwal yang berubah; tanyakan tujuan dan waktu keberangkatan secara langsung.</p></div></article><article><span>03</span><div><h3>Taksi, ojek & kendaraan sewaan</h3><p>Dari Batusangkar, lanjutkan dengan taksi, ojek, atau kendaraan sewaan. Sepakati tujuan, tarif, dan waktu tunggu sebelum perjalanan, terutama bila Anda perlu kembali ke kota pada hari yang sama.</p></div></article></div></div>
+      <div class="facility-strip"><div><b>Parkir</b><span>Ikuti petunjuk area parkir dan petugas di lokasi.</span></div><div><b>Toilet</b><span>Tanyakan letak fasilitas umum setibanya di kawasan.</span></div><div><b>Makan & minum</b><span>Temukan pilihan makanan ringan dan hidangan lokal di sekitar area kunjungan.</span></div><div><b>Kebutuhan perjalanan</b><span>Layanan penginapan, toko kebutuhan, dan pengisian bahan bakar tersedia di kawasan Batusangkar menurut kebutuhan rute Anda.</span></div></div>
+    </section>
+
+    <section id="peta" class="map-section"><div class="map-copy"><p class="section-label light"><span>04</span> TEMUKAN LOKASI</p><h2>Istano Basa<br />Pagaruyung</h2><p>Jl. Sutan Alam Bagagarsyah<br />Pagaruyung, Kec. Tanjung Emas<br />Kabupaten Tanah Datar, Sumatera Barat 27281</p><a href="https://www.google.com/maps/dir/?api=1&destination_place_id=ChIJ3ccpvtLSKi4RvP_vMLI-nrE&destination=Istano%20Basa%20Pagaruyung" target="_blank" rel="noreferrer">Dapatkan rute <span>↗</span></a></div><iframe src={mapEmbed} title="Peta lokasi Istano Basa Pagaruyung" width="600" height="450" style="border:0" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></section>
+
+    <section id="sekitar" class="around-section content-wrap section-spacing">
+      <div class="section-label"><span>05</span> LANJUTKAN PENJELAJAHAN</div><div class="around-heading"><h2>Tanah Datar tidak selesai<br />di satu halaman.</h2><p>Susun kunjungan yang mempertemukan budaya, lanskap, dan jeda untuk menikmati makanan lokal. Nama-nama di bawah adalah kategori dan tujuan kawasan, bukan rekomendasi komersial.</p></div><div class="around-grid"><article class="feature-card"><img src="/images/istana-pagaruyung-detail.jpg" alt="Bangunan Istano Basa Pagaruyung dari sudut lain" /><div><p class="eyebrow">BUDAYA DI SEKITAR</p><h3>Situs Prasasti Pagaruyung</h3><p>Tambahkan situs prasasti untuk memahami jejak sejarah kerajaan di wilayah Pagaruyung.</p></div></article><div class="nearby-list"><article><span>01</span><div><h3>Istano Silinduang Bulan</h3><p>Bangunan Rumah Gadang lain di kawasan Pagaruyung yang dapat melengkapi konteks arsitektur dan sejarah lokal.</p></div></article><article><span>02</span><div><h3>Batusangkar</h3><p>Gunakan kota ini sebagai titik singgah untuk kebutuhan perjalanan, makan, penginapan, dan akses menuju atraksi di Tanah Datar.</p></div></article><article><span>03</span><div><h3>Danau Singkarak & lanskap Minangkabau</h3><p>Jika rute memungkinkan, lanjutkan dengan tujuan alam dan budaya lain di Sumatera Barat. Periksa kondisi cuaca serta akses sebelum berangkat.</p></div></article></div></div>
+      <div class="food-guide"><div><p class="eyebrow">PILIHAN NETRAL</p><h3>Untuk jeda di perjalanan</h3></div><p><b>Kuliner:</b> cari rumah makan Minang, warung makan, kudapan tradisional, atau minuman lokal sesuai preferensi dan kebutuhan diet Anda.</p><p><b>Menginap:</b> pertimbangkan hotel, penginapan, atau homestay di Batusangkar bila ingin menjelajahi Tanah Datar dengan ritme lebih santai.</p><p><b>Belanja kecil:</b> pilih pasar, kios, atau toko kebutuhan umum untuk air minum dan perlengkapan perjalanan. Hindari mengandalkan satu tempat tertentu.</p></div>
+    </section>
+
+    <section class="gallery-section"><div class="content-wrap"><div class="section-label light"><span>06</span> MEMBACA DETAIL</div><h2>Kayu, garis, langit,<br />dan warisan yang hidup.</h2><div class="gallery-grid"><figure><img src="/images/istano-rajo-basa.jpg" alt="Foto Istano Basa Pagaruyung dari area luar" /><figcaption>Ruang luar istano dan siluet atapnya.</figcaption></figure><figure><img src="/images/rumah-gadang-detail.jpg" alt="Detail Rumah Gadang di Istano Basa Pagaruyung" /><figcaption>Ornamen dan struktur Rumah Gadang.</figcaption></figure></div><div class="image-credits"><p class="eyebrow">KREDIT FOTO</p><ul><li><a href="https://commons.wikimedia.org/wiki/File:Istano_Basa_Pagaruyung.jpg" target="_blank" rel="noreferrer">Istano Basa Pagaruyung</a> — Adhmi, CC BY-SA 4.0.</li><li><a href="https://commons.wikimedia.org/wiki/File:Rumah_Gadang,_Istano_Basa_Pagaruyung.jpg" target="_blank" rel="noreferrer">Rumah Gadang, Istano Basa Pagaruyung</a> — Ichan.dgmc, CC BY-SA 4.0.</li><li><a href="https://commons.wikimedia.org/wiki/File:Istana_Pagaruyung_17.jpg" target="_blank" rel="noreferrer">Istana Pagaruyung 17</a> — Kementerian Pekerjaan Umum Indonesia, domain publik.</li><li><a href="https://commons.wikimedia.org/wiki/File:Istano_Rajo_Basa_Pagaruyung.jpg" target="_blank" rel="noreferrer">Istano Rajo Basa Pagaruyung</a> — Herusutimbul, CC BY-SA 4.0.</li></ul></div></div></section>
+
+    <section id="faq" class="faq-section content-wrap section-spacing"><div class="section-label"><span>07</span> PERTANYAAN UMUM</div><div class="faq-grid"><h2>Hal yang sering ditanyakan sebelum berangkat.</h2><div class="faq-list">{faq.map((item) => <details><summary>{item.q}<span>+</span></summary><p>{item.a}</p></details>)}</div></div></section>
+  </main>
+
+  <footer class="site-footer"><div class="content-wrap footer-grid"><div class="footer-brand"><svg viewBox="0 0 54 44" aria-hidden="true"><path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" /><path d="M8 17 15 9l4 9M25 7l2-5 3 5M38 18l4-9 7 8" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" /></svg><div><b>ISTANO BASA PAGARUYUNG</b><p>Panduan pengunjung independen untuk Tanah Datar.</p></div></div><div class="footer-links"><button data-open-dialog="privacy">Kebijakan Privasi</button><button data-open-dialog="terms">Syarat Layanan</button><button data-open-dialog="cookies">Pengaturan Cookie</button></div><div class="footer-note"><p>Situs ini adalah proyek panduan pengunjung independen dan nirlaba. Situs ini tidak berafiliasi dengan Istano Basa Pagaruyung, instansi pemerintah, atau operator komersial mana pun.</p><p>Informasi diringkas dari Indonesia Travel, Wikimedia Commons, Trip.com, Wikivoyage, dan sumber rujukan publik lainnya. Tidak ada rekomendasi bisnis spesifik.</p><p>Foto tunduk pada hak cipta fotografer masing-masing; lihat kredit dan lisensi yang tercantum. © 2026 Panduan Istano Basa Pagaruyung.</p></div></div></footer>
+
+  <dialog data-dialog="privacy"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Tutup">×</button><p class="eyebrow">KEBIJAKAN PRIVASI · AGUSTUS 2026</p><h2>Data minimum, penjelasan terbuka.</h2><p>Kami hanya mengumpulkan data yang diperlukan untuk menjalankan situs, seperti data penjelajahan dasar, pilihan Cookie, dan informasi yang Anda kirimkan secara sukarela melalui kanal kontak.</p><h3>Penggunaan & layanan pihak ketiga</h3><p>Data dapat digunakan untuk memahami penggunaan situs, meningkatkan konten, menanggapi permintaan, dan memenuhi kewajiban hukum. Situs ini dapat memakai Google Maps untuk peta serta Google Analytics untuk statistik anonim, hanya bila persetujuan analitik diberikan.</p><h3>Hak Anda</h3><p>Anda dapat meminta akses, perbaikan, atau penghapusan data pribadi yang relevan, serta mengajukan keberatan sesuai peraturan yang berlaku.</p></article></dialog>
+  <dialog data-dialog="terms"><article class="policy-dialog"><button class="dialog-close" data-close-dialog aria-label="Tutup">×</button><p class="eyebrow">SYARAT LAYANAN · AGUSTUS 2026</p><h2>Gunakan sebagai panduan, bukan pengganti verifikasi.</h2><p>Seluruh konten disediakan untuk informasi umum. Kami adalah panduan wisata independen, bukan perwakilan resmi tempat wisata, pemerintah, atau usaha mana pun.</p><h3>Ketepatan informasi</h3><p>Kami berupaya menggunakan sumber publik yang dapat ditelusuri, tetapi jadwal, layanan, tarif, akses, dan kondisi perjalanan dapat berubah. Konfirmasikan informasi penting kepada kanal resmi atau petugas di lokasi sebelum membuat keputusan perjalanan.</p><h3>Hak cipta & tanggung jawab</h3><p>Desain dan naskah situs dilindungi hak cipta. Foto mematuhi lisensi yang dicantumkan. Situs disediakan apa adanya tanpa jaminan atas kerugian yang timbul dari keputusan perjalanan.</p></article></dialog>
+  <dialog data-dialog="cookies"><article class="policy-dialog cookie-dialog"><button class="dialog-close" data-close-dialog aria-label="Tutup">×</button><p class="eyebrow">PENGATURAN COOKIE</p><h2>Anda yang menentukan.</h2><p>Cookie esensial diperlukan agar pengaturan ini berfungsi. Cookie analitik hanya digunakan bila Anda mengizinkannya. Tidak ada Cookie pemasaran pada situs ini.</p><label class="cookie-row disabled"><span><b>Cookie esensial</b><small>Diperlukan untuk menyimpan pilihan Anda.</small></span><input type="checkbox" checked disabled /></label><label class="cookie-row"><span><b>Analitik</b><small>Membantu memahami penggunaan situs secara anonim melalui Google Analytics.</small></span><input id="analytics-consent" type="checkbox" /></label><label class="cookie-row"><span><b>Preferensi</b><small>Menyimpan pilihan tampilan dan Cookie di perangkat ini.</small></span><input id="preferences-consent" type="checkbox" checked /></label><div class="cookie-actions"><button class="button dark" data-save-cookie>Simpan pilihan <span>→</span></button><button class="button ghost" data-reject-cookie>Tolak analitik</button></div></article></dialog>
+
+  <script is:inline>
+    const cookieKey = "istano-pagaruyung-cookie-preferences";
+    const dialogButtons = document.querySelectorAll("[data-open-dialog]");
+    const dialogs = document.querySelectorAll("dialog[data-dialog]");
+    const closeButtons = document.querySelectorAll("[data-close-dialog]");
+    const menuButton = document.querySelector("[data-menu-button]");
+    const menu = document.querySelector("[data-menu]");
+    const analytics = document.querySelector("#analytics-consent");
+    const preferences = document.querySelector("#preferences-consent");
+    let gaLoaded = false;
+
+    function loadAnalytics() {
+      if (gaLoaded) return;
+      gaLoaded = true;
+      const external = document.createElement("script");
+      external.async = true;
+      external.src = "https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP";
+      document.head.append(external);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ window.dataLayer.push(arguments); }
+      gtag("js", new Date());
+      gtag("config", "G-HXM22WWPKP", { anonymize_ip: true });
+    }
+
+    function applyPreferences(value) {
+      analytics.checked = Boolean(value.analytics);
+      preferences.checked = value.preferences !== false;
+      if (value.analytics) loadAnalytics();
+    }
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(cookieKey) || "null");
+      if (saved) applyPreferences(saved);
+    } catch {}
+
+    dialogButtons.forEach((button) => button.addEventListener("click", () => document.querySelector(`[data-dialog="${button.dataset.openDialog}"]`)?.showModal()));
+    closeButtons.forEach((button) => button.addEventListener("click", () => button.closest("dialog")?.close()));
+    dialogs.forEach((dialog) => dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); }));
+    document.querySelector("[data-save-cookie]")?.addEventListener("click", () => { const value = { analytics: analytics.checked, preferences: preferences.checked }; localStorage.setItem(cookieKey, JSON.stringify(value)); if (value.analytics) loadAnalytics(); document.querySelector('[data-dialog="cookies"]')?.close(); });
+    document.querySelector("[data-reject-cookie]")?.addEventListener("click", () => { localStorage.setItem(cookieKey, JSON.stringify({ analytics: false, preferences: preferences.checked })); analytics.checked = false; document.querySelector('[data-dialog="cookies"]')?.close(); });
+    menuButton?.addEventListener("click", () => { const open = menu.classList.toggle("open"); menuButton.setAttribute("aria-expanded", String(open)); });
+    menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => { menu.classList.remove("open"); menuButton?.setAttribute("aria-expanded", "false"); }));
+  </script>
+</BaseLayout>
