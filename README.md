@@ -33,6 +33,16 @@ PUBLIC_SITE_URL=https://nama-domain-anda.id corepack pnpm build
 corepack pnpm deploy
 ```
 
+## Canonicalisasi domain (Cloudflare)
+
+Agar sinyal peringkat tidak terpecah antar varian URL (terlihat di GSC sebagai `http://`, `www.`, dan root masing-masing menarik impression), samakan semua ke satu URL kanonik HTTPS apex melalui Cloudflare:
+
+- **HTTPS**: aktifkan *Always Use HTTPS* di dashboard Cloudflare (menangani `http://` → `https://`).
+- **www → apex**: buat *Redirect Rule* yang mengalihkan `www.pagaruyung.com/*` ke `https://pagaruyung.com/*` (301).
+- **`_redirects` tidak menangani redirect tingkat domain** pada Workers Static Assets (hanya jalur/path). Redirect domain harus dibuat lewat *Redirect Rules* di Cloudflare, bukan file `_redirects`.
+
+`astro.config.mjs` sudah menghasilkan canonical absolut dan hreflang (id + en + x-default) saat `PUBLIC_SITE_URL` disetel, sehingga Google mengelompokkan versi bahasa dengan benar.
+
 ## Foto dan atribusi
 
 Seluruh foto tersimpan secara lokal di `public/images`. Kredit, tautan sumber, dan lisensi CC BY-SA/domain publik tercantum pada bagian **Kredit Foto** di halaman serta di `CONTENT_SOURCES.md`.

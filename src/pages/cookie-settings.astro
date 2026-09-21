@@ -1,8 +1,9 @@
 ---
 import CookieSettingsForm from "../components/CookieSettingsForm.astro";
 import LegalLayout from "../layouts/LegalLayout.astro";
+import { withSiteName } from "../data/site";
 
-const title = "Pengaturan Cookie | Istano Basa Pagaruyung";
+const title = withSiteName("id", "Pengaturan Cookie");
 const description = "Halaman pengaturan Cookie untuk mengelola persetujuan analitik dan preferensi lokal di situs panduan Istano Basa Pagaruyung.";
 ---
 

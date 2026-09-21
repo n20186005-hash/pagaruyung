@@ -1,9 +1,10 @@
 ---
 import SiteFooter from "../../components/SiteFooter.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../../data/site";
 
-const title = "Istano Basa Pagaruyung | Tanah Datar Visitor Guide";
-const description = "An independent English visitor guide to Istano Basa Pagaruyung in Tanah Datar, West Sumatra.";
+const title = `${SITE_NAME.en} | Tickets, Hours & How to Get There`;
+const description = "Independent visitor guide to Istano Basa Pagaruyung in Tanah Datar, West Sumatra: opening hours, ticket prices, how to get there from Padang or Bukittinggi, and visit tips.";
 const configuredPageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const structuredImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", Astro.site).href : "/images/istano-basa-pagaruyung-hero.jpg";
 const mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6893.632550900992!2d100.61882997686912!3d-0.47129103528237476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2ad2d2be29c7dd%3A0xb19e3eb230efffbc!2sIstano%20Basa%20Pagaruyung!5e1!3m2!1sen!2sid!4v1787020204709!5m2!1sen!2sid";
@@ -22,6 +23,7 @@ const attractionJsonLd = {
   name: "Istano Basa Pagaruyung",
   description,
   image: structuredImage,
+  hasMap: "https://www.google.com/maps/dir/?api=1&destination_place_id=ChIJ3ccpvtLSKi4RvP_vMLI-nrE&destination=Istano%20Basa%20Pagaruyung",
   ...(configuredPageUrl ? { url: configuredPageUrl } : {}),
   address: {
     "@type": "PostalAddress",

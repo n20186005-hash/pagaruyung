@@ -1,9 +1,10 @@
 ---
 import SiteFooter from "../components/SiteFooter.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE_NAME } from "../data/site";
 
-const title = "Istano Basa Pagaruyung | Panduan Pengunjung Tanah Datar";
-const description = "Panduan independen berbahasa Indonesia untuk merencanakan kunjungan ke Istano Basa Pagaruyung di Tanah Datar, Sumatera Barat.";
+const title = `${SITE_NAME.id} | Tiket, Jam Buka & Cara ke Sana`;
+const description = "Panduan mandiri Istano Basa Pagaruyung di Tanah Datar, Sumatera Barat: jam buka 08.00–18.00, harga tiket, cara ke sana dari Padang/Bukittinggi, dan tips berkunjung.";
 const configuredPageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const structuredImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", Astro.site).href : "/images/istano-basa-pagaruyung-hero.jpg";
 
@@ -23,6 +24,7 @@ const attractionJsonLd = {
   name: "Istano Basa Pagaruyung",
   description,
   image: structuredImage,
+  hasMap: "https://www.google.com/maps/dir/?api=1&destination_place_id=ChIJ3ccpvtLSKi4RvP_vMLI-nrE&destination=Istano%20Basa%20Pagaruyung",
   ...(configuredPageUrl ? { url: configuredPageUrl } : {}),
   address: {
     "@type": "PostalAddress",

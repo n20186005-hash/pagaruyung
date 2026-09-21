@@ -1,8 +1,9 @@
 ---
 import CookieSettingsForm from "../../components/CookieSettingsForm.astro";
 import LegalLayout from "../../layouts/LegalLayout.astro";
+import { withSiteName } from "../../data/site";
 
-const title = "Cookie Settings | Istano Basa Pagaruyung";
+const title = withSiteName("en", "Cookie Settings");
 const description = "Cookie settings page for managing analytics consent and local preferences on the Istano Basa Pagaruyung guide site.";
 ---
 
