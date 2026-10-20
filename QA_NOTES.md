@@ -1,17 +1,7 @@
-# Catatan QA
+# Validation scope
 
-## Pratinjau peramban
+Check the Indonesian and English guide and legal-page families for unique metadata, canonical URLs, corresponding language alternates, internal links and local image files. Visible FAQ answers and JSON-LD share one data array.
 
-Pratinjau lokal menampilkan judul halaman yang benar, navigasi satu halaman, foto Istano Basa Pagaruyung yang tersimpan lokal, teks berbahasa Indonesia, tautan peta, bagian FAQ, serta tombol untuk Kebijakan Privasi, Syarat Layanan, dan Pengaturan Cookie.
+Mobile primary navigation and language controls remain visible, with minimum 44px targets. The missing-page route is noindex and keeps an actual 404 response through the ASSETS Worker.
 
-## Pemeriksaan tampilan awal
-
-Hero menampilkan foto nyata bangunan Istano dengan siluet gonjong, logomark berbasis bentuk Rumah Gadang, metrik jam/durasi/peringkat, dan jalur navigasi ke setiap kebutuhan konten utama. Tidak ada campuran bahasa antarmuka pada halaman utama.
-
-## Pemeriksaan interaksi
-
-Tombol Kebijakan Privasi terhubung ke dialog yang sesuai. Pengujian DOM mengonfirmasi bahwa dialog dapat dibuka melalui event tombol halaman. FAQ menggunakan elemen `details` bawaan untuk akses keyboard dan pembaca layar.
-
-## Pemeriksaan bilingual
-
-Halaman `/en/` telah dibangun sebagai rute statis dan menampilkan judul, navigasi, isi utama, FAQ, kebijakan, Cookie, serta JSON-LD berbahasa Inggris. Pemeriksaan DOM mengonfirmasi tombol bahasa mengarah ke `/` untuk Bahasa Indonesia dan `/en/` untuk English.
+Run the repository check/build and a Worker dry-run. Verify HTTP/www path-and-query preservation and an unknown-path 404 locally, then verify the deployed build and browser layout independently after release.

@@ -96,7 +96,7 @@ const copy = lang === "en"
   document.querySelector("[data-save-cookie]")?.addEventListener("click", () => {
     if (!(analytics instanceof HTMLInputElement) || !(preferences instanceof HTMLInputElement)) return;
     const value = { analytics: analytics.checked, preferences: preferences.checked };
-    localStorage.setItem(cookieKey, JSON.stringify(value));
+    try { localStorage.setItem(cookieKey, JSON.stringify(value)); } catch {}
     if (value.analytics) window["__istanoLoadAnalytics"]?.();
     if (status) status.textContent = statusSaved;
   });
@@ -105,7 +105,7 @@ const copy = lang === "en"
     if (!(analytics instanceof HTMLInputElement) || !(preferences instanceof HTMLInputElement)) return;
     analytics.checked = false;
     const value = { analytics: false, preferences: preferences.checked };
-    localStorage.setItem(cookieKey, JSON.stringify(value));
+    try { localStorage.setItem(cookieKey, JSON.stringify(value)); } catch {}
     if (status) status.textContent = statusRejected;
   });
 </script>

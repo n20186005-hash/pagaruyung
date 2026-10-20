@@ -1,17 +1,17 @@
 ---
 import SiteFooter from "../components/SiteFooter.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SITE_NAME } from "../data/site";
 
-const title = `${SITE_NAME.id} | Tiket, Jam Buka & Cara ke Sana`;
-const description = "Panduan mandiri Istano Basa Pagaruyung di Tanah Datar, Sumatera Barat: jam buka 08.00–18.00, harga tiket, cara ke sana dari Padang/Bukittinggi, dan tips berkunjung.";
+
+const title = "Istano Basa Pagaruyung: Sejarah, Jam Buka & Lokasi";
+const description = "Kenali Istano Basa Pagaruyung di Tanah Datar: museum istana rekonstruksi, sejarah Kerajaan Pagaruyung, jam kunjungan bertanggal, lokasi dan konfirmasi tiket.";
 const configuredPageUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const structuredImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", Astro.site).href : "/images/istano-basa-pagaruyung-hero.jpg";
 
-const mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6893.632550900992!2d100.61882997686912!3d-0.47129103528237476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2ad2d2be29c7dd%3A0xb19e3eb230efffbc!2sIstano%20Basa%20Pagaruyung!5e1!3m2!1sid!2sid!4v1787020204709!5m2!1sid!2sid";
+const mapEmbed = "https://maps.google.com/maps?q=-0.4712964,100.6214049&z=16&output=embed";
 
 const faq = [
-  { q: "Kapan Istano Basa Pagaruyung dibuka?", a: "Sejumlah panduan mencantumkan jam kunjungan 08.00–18.00. Karena jam dapat berubah untuk kegiatan adat, pemeliharaan, atau kondisi setempat, konfirmasikan kembali sebelum berangkat." },
+  { q: "Kapan Istano Basa Pagaruyung dibuka?", a: "Google Maps mencantumkan 08.00–18.00 setiap hari saat diperiksa 19 Oktober 2026. Ini catatan bertanggal, bukan jaminan untuk hari libur, acara atau pemeliharaan; konfirmasikan kepada petugas sebelum berangkat." },
   { q: "Berapa lama waktu yang ideal untuk berkunjung?", a: "Sediakan sekitar 1–3 jam untuk menjelajahi bangunan utama, berfoto di kawasan, dan memahami konteks budaya. Tambahkan waktu bila menggabungkan kunjungan dengan situs budaya lain di Tanah Datar." },
   { q: "Bagaimana cara mencapai lokasi tanpa kendaraan pribadi?", a: "Rencanakan perjalanan menuju Batusangkar terlebih dahulu. Dari sana, gunakan angkutan lokal, taksi, atau ojek untuk tahap akhir menuju kawasan Istano. Tanyakan ketersediaan dan tarif sebelum berangkat." },
   { q: "Apakah ada aturan berpakaian?", a: "Kenakan pakaian yang sopan, nyaman, dan sesuai cuaca. Ikuti petunjuk petugas di lokasi, termasuk ketentuan alas kaki atau area yang tidak dapat diakses pengunjung." },
@@ -24,7 +24,7 @@ const attractionJsonLd = {
   name: "Istano Basa Pagaruyung",
   description,
   image: structuredImage,
-  hasMap: "https://www.google.com/maps/dir/?api=1&destination_place_id=ChIJ3ccpvtLSKi4RvP_vMLI-nrE&destination=Istano%20Basa%20Pagaruyung",
+  hasMap: "https://www.google.com/maps/dir/?api=1&destination=-0.4712964,100.6214049",
   ...(configuredPageUrl ? { url: configuredPageUrl } : {}),
   address: {
     "@type": "PostalAddress",
@@ -36,20 +36,8 @@ const attractionJsonLd = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: -0.47129103528237476,
-    longitude: 100.61882997686912
-  },
-  openingHoursSpecification: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((dayOfWeek) => ({
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek,
-    opens: "08:00",
-    closes: "18:00"
-  })),
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.7",
-    reviewCount: "17648",
-    bestRating: "5"
+    latitude: -0.4712964,
+    longitude: 100.6214049
   }
 };
 
@@ -73,7 +61,6 @@ const faqJsonLd = {
       <svg class="brand-mark" viewBox="0 0 54 44" aria-hidden="true"><path d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linejoin="round" /><path d="M8 17 15 9l4 9M25 7l2-5 3 5M38 18l4-9 7 8" fill="none" stroke="#dca83a" stroke-width="2.7" stroke-linecap="round" /></svg>
       <span><b>ISTANO BASA</b><small>PAGARUYUNG · TANAH DATAR</small></span>
     </a>
-    <button class="menu-button" aria-label="Buka menu" aria-expanded="false" data-menu-button><span></span><span></span></button>
     <nav class="site-nav" data-menu aria-label="Navigasi utama">
       <a href="#tentang">Tentang</a><a href="#kunjungan">Kunjungan</a><a href="#akses">Akses</a><a href="#sekitar">Di Sekitar</a><a href="#faq">FAQ</a>
       <a class="nav-map" href="#peta">Lihat peta <span>↗</span></a>
@@ -87,31 +74,32 @@ const faqJsonLd = {
       <div class="hero-shade"></div>
       <div class="hero-content content-wrap">
         <p class="kicker light"><span></span> TANAH DATAR · SUMATERA BARAT</p>
-        <h1 id="hero-title">Di bawah<br /><em>gonjong</em> yang<br />menjaga ingatan.</h1>
+        <h1 id="hero-title">Istano Basa<br /><em>Pagaruyung</em><br />Tanah Datar.</h1>
         <p class="hero-text">Panduan mandiri untuk mengenal Istano Basa Pagaruyung — ruang budaya Minangkabau, jejak sejarah, dan pengalaman berkunjung di jantung Tanah Datar.</p>
         <div class="hero-actions"><a class="button gold" href="#kunjungan">Rencanakan kunjungan <span>↓</span></a><a class="text-link light" href="#tentang">Kenali istano <span>→</span></a></div>
       </div>
-      <div class="hero-metrics"><div><strong>08.00–18.00</strong><span>jam rujukan kunjungan</span></div><div><strong>1–3 jam</strong><span>saran durasi jelajah</span></div><div><strong>4,7 / 5</strong><span>peringkat ulasan publik*</span></div></div>
+      <div class="hero-metrics"><div><strong>08.00–18.00</strong><span>catatan Maps · 19 Okt 2026</span></div><div><strong>1–3 jam</strong><span>saran durasi jelajah</span></div><div><strong>4,7 / 5</strong><span>Google Maps · 17.759 ulasan · 19 Okt 2026</span></div></div>
       <p class="hero-credit">Foto: Adhmi / Wikimedia Commons · CC BY-SA 4.0</p>
     </section>
 
     <section id="tentang" class="intro-section content-wrap section-spacing">
       <div class="section-label"><span>01</span> SEBUAH ISTANO, BUKAN SEKADAR BANGUNAN</div>
-      <div class="intro-grid"><div><h2>Tempat di mana adat, pemerintahan, dan memori bertemu.</h2></div><div class="body-copy"><p>Istano Basa Pagaruyung merupakan salah satu penanda budaya terpenting Minangkabau. Sebagai museum khusus yang dikelola di Tanah Datar, istano ini membantu pengunjung membaca kembali adat, arsitektur Rumah Gadang, dan gagasan kepemimpinan yang pernah menghubungkan kawasan ini.</p><p>Di dalam tradisi Pagaruyung, <i>Rajo Tigo Selo</i> merujuk pada tiga peran: Raja Alam, Raja Adat, dan Raja Ibadat. Susunan ini sering dipahami sebagai perjumpaan antara pemerintahan, adat, dan nilai keagamaan.</p></div></div>
-      <div class="photo-split"><figure class="large"><img src="/images/rumah-gadang-detail.jpg" alt="Detail fasad dan atap Rumah Gadang di kawasan Istano Basa Pagaruyung" /><figcaption>Arsitektur Rumah Gadang: bentuk atap gonjong mengingatkan pada tanduk kerbau dalam tradisi Minangkabau.</figcaption></figure><div class="history-card"><p class="eyebrow">LINTAS WAKTU</p><h3>Terbakar, dibangun kembali, dan terus dirawat.</h3><ol><li><b>1804</b><span>Istano terdahulu mengalami kebakaran, lalu dibangun kembali.</span></li><li><b>1966</b><span>Bangunan kembali musnah akibat kebakaran.</span></li><li><b>1976</b><span>Rekonstruksi besar dimulai di lokasi saat ini, di selatan situs lama.</span></li></ol><p class="source-note">Ringkasan sejarah merujuk pada Indonesia Travel. Bangunan yang dikunjungi hari ini merupakan rekonstruksi dan museum budaya.</p></div></div>
+      <div class="intro-grid"><div><h2>Tempat di mana adat, pemerintahan, dan memori bertemu.</h2></div><div class="body-copy"><p>Kerajaan Pagaruyung dalam sejarah berbeda dari bangunan yang dikunjungi sekarang. Indonesia Travel menjelaskan Istano Basa Pagaruyung saat ini sebagai istana rekonstruksi dan museum khusus di Tanah Datar, Sumatera Barat. Bangunan ini mengenalkan warisan Minangkabau, bukan istana asli yang bertahan tanpa perubahan sejak masa kerajaan.</p><p>Gunakan kunjungan museum sebagai pengantar arsitektur Rumah Gadang dan sejarah budaya kawasan; sejarah museum tidak sama dengan keseluruhan sejarah kerajaan.</p></div></div>
+      <div class="photo-split"><figure class="large"><img src="/images/rumah-gadang-detail.jpg" alt="Detail fasad dan atap Rumah Gadang di kawasan Istano Basa Pagaruyung" /><figcaption>Arsitektur Rumah Gadang: bentuk atap gonjong mengingatkan pada tanduk kerbau dalam tradisi Minangkabau.</figcaption></figure><div class="history-card"><p class="eyebrow">LINTAS WAKTU</p><h3>Terbakar, dibangun kembali, dan terus dirawat.</h3><ol><li><b>27 Desember 1976</b><span>Indonesia Travel mencatat pembangunan tiang utama rekonstruksi di lokasi sekarang pada tanggal ini.</span></li><li><b>2007</b><span>Kantor Wakil Presiden mencatat kebakaran 27 Februari dan awal pembangunan kembali 8 Juli.</span></li><li><b>Oktober 2013</b><span>Museum hasil rekonstruksi dibuka kembali menurut catatan Kantor Wakil Presiden.</span></li></ol><p class="source-note"><a href="https://www.indonesia.travel/gb/en/destination/sumatra/west-sumatra/istano-basa-pagaruyung-minangkabau-cultural-heritage">Indonesia Travel</a> · <a href="https://wapresri.go.id/kearifan-masa-lalu-modal-kejayaan-masa-depan/">Kantor Wakil Presiden</a> · sumber diperiksa 19 Oktober 2026.</p></div></div>
     </section>
 
     <section id="kunjungan" class="visit-section section-spacing">
-      <div class="content-wrap"><div class="section-label light"><span>02</span> PANDUAN KUNJUNGAN</div><div class="visit-heading"><h2>Datang dengan rasa ingin tahu,<br /><em>pulang dengan konteks.</em></h2><p>Gunakan bagian ini sebagai orientasi awal. Kondisi operasional di lapangan dapat berubah; verifikasi informasi penting sebelum perjalanan.</p></div><div class="visit-cards"><article><span class="icon">◷</span><h3>Waktu terbaik</h3><p>Pagi hari memberi cahaya yang lebih lembut untuk melihat bentuk gonjong dan berjalan di kawasan. Datanglah lebih awal bila ingin ritme kunjungan yang lebih tenang.</p></article><article><span class="icon">◎</span><h3>Durasi yang disarankan</h3><p>Sisihkan 1–3 jam untuk bangunan utama, area luar, foto, dan membaca konteks budaya. Tambahkan waktu bila melanjutkan ke Batusangkar atau situs sekitar.</p></article><article><span class="icon">Rp</span><h3>Tiket & biaya</h3><p>Tarif masuk serta biaya layanan pendukung dapat berubah. Periksa papan informasi dan loket setempat pada hari kunjungan; jangan mengandalkan angka lama dari blog perjalanan.</p></article><article><span class="icon">↟</span><h3>Etika di istano</h3><p>Berpakaian sopan, ikuti arahan petugas, dan hormati area yang dibatasi. Tanyakan dahulu sebelum menggunakan busana adat atau layanan foto di lokasi.</p></article></div></div>
+      <div class="content-wrap"><div class="section-label light"><span>02</span> PANDUAN KUNJUNGAN</div><div class="visit-heading"><h2>Datang dengan rasa ingin tahu,<br /><em>pulang dengan konteks.</em></h2><p>Gunakan bagian ini sebagai orientasi awal. Kondisi operasional di lapangan dapat berubah; verifikasi informasi penting sebelum perjalanan.</p></div><div class="visit-cards"><article><span class="icon">◷</span><h3>Waktu terbaik</h3><p>Pagi hari memberi cahaya yang lebih lembut untuk melihat bentuk gonjong dan berjalan di kawasan. Datanglah lebih awal bila ingin ritme kunjungan yang lebih tenang.</p></article><article><span class="icon">◎</span><h3>Durasi yang disarankan</h3><p>Sisihkan 1–3 jam untuk bangunan utama, area luar, foto, dan membaca konteks budaya. Tambahkan waktu bila melanjutkan ke Batusangkar atau situs sekitar.</p></article><article><span class="icon">Rp</span><h3>Tiket & biaya</h3><p>Tarif masuk serta biaya layanan pendukung dapat berubah. Periksa papan informasi dan loket setempat pada hari kunjungan; jangan mengandalkan angka lama dari blog perjalanan.</p></article><article><span class="icon">↟</span><h3>Etika di istano</h3><p>Berpakaian sopan, ikuti arahan petugas, dan hormati area yang dibatasi. Indonesia Travel menyebut pengalaman busana tradisional; tanyakan ketersediaan saat ini, harga dan kebutuhan pemesanan kepada petugas.</p></article></div></div>
     </section>
 
+    <p class="source-note">Catatan Google Maps diperiksa 19 Oktober 2026: setiap hari 08.00–18.00, 4,7/5 dari 17.759 ulasan; telepon <a href="tel:+628217635177">+62 821 7635 177</a> tercantum di Maps. Ini data pihak ketiga bertanggal, bukan konfirmasi pengelola. Tarif tiket dan layanan busana saat ini belum terverifikasi; tanyakan kepada loket. <a href="https://maps.app.goo.gl/RqqYs1bsjPJaDFB66">Lihat catatan Maps</a>.</p>
     <section id="akses" class="access-section content-wrap section-spacing">
       <div class="section-label"><span>03</span> MENUJU PAGARUYUNG</div>
       <div class="access-grid"><div><h2>Perjalanan berakhir di Batusangkar; dari sana, istano sudah dekat.</h2><p class="body-copy lead">Istano berada di Nagari Pagaruyung, Kecamatan Tanjung Emas, Kabupaten Tanah Datar. Rencanakan moda utama hingga Batusangkar terlebih dahulu, kemudian siapkan transportasi untuk tahap akhir perjalanan.</p><a class="button dark" href="#peta">Buka lokasi di peta <span>↘</span></a></div><div class="route-list"><article><span>01</span><div><h3>Dari bandara</h3><p>Bandara Internasional Minangkabau melayani pintu masuk udara kawasan Padang. Untuk menuju Tanah Datar, lanjutkan melalui kendaraan darat terjadwal, sewaan, atau perjalanan yang telah diatur sebelumnya. Periksa kondisi rute dan waktu tempuh saat merencanakan perjalanan.</p></div></article><article><span>02</span><div><h3>Bus & angkutan lokal</h3><p>Untuk pilihan hemat, cari rute menuju Batusangkar dari kota-kota penghubung seperti Padang Panjang atau Bukittinggi. Angkutan lokal dapat memiliki jadwal yang berubah; tanyakan tujuan dan waktu keberangkatan secara langsung.</p></div></article><article><span>03</span><div><h3>Taksi, ojek & kendaraan sewaan</h3><p>Dari Batusangkar, lanjutkan dengan taksi, ojek, atau kendaraan sewaan. Sepakati tujuan, tarif, dan waktu tunggu sebelum perjalanan, terutama bila Anda perlu kembali ke kota pada hari yang sama.</p></div></article></div></div>
-      <div class="facility-strip"><div><b>Parkir</b><span>Ikuti petunjuk area parkir dan petugas di lokasi.</span></div><div><b>Toilet</b><span>Tanyakan letak fasilitas umum setibanya di kawasan.</span></div><div><b>Makan & minum</b><span>Temukan pilihan makanan ringan dan hidangan lokal di sekitar area kunjungan.</span></div><div><b>Kebutuhan perjalanan</b><span>Layanan penginapan, toko kebutuhan, dan pengisian bahan bakar tersedia di kawasan Batusangkar menurut kebutuhan rute Anda.</span></div></div>
+      <div class="facility-strip"><div><b>Parkir</b><span>Ikuti petunjuk area parkir dan petugas di lokasi.</span></div><div><b>Toilet</b><span>Tanyakan letak fasilitas umum setibanya di kawasan.</span></div><div><b>Makan & minum</b><span>Tanyakan kepada petugas pilihan makanan yang tersedia pada hari kunjungan.</span></div><div><b>Kebutuhan perjalanan</b><span>Jika memerlukan penginapan, perlengkapan atau bahan bakar, periksa lokasi dan jam layanan operator sesuai rute Anda.</span></div></div>
     </section>
 
-    <section id="peta" class="map-section"><div class="map-copy"><p class="section-label light"><span>04</span> TEMUKAN LOKASI</p><h2>Istano Basa<br />Pagaruyung</h2><p>Jl. Sutan Alam Bagagarsyah<br />Pagaruyung, Kec. Tanjung Emas<br />Kabupaten Tanah Datar, Sumatera Barat 27281</p><a href="https://www.google.com/maps/dir/?api=1&destination_place_id=ChIJ3ccpvtLSKi4RvP_vMLI-nrE&destination=Istano%20Basa%20Pagaruyung" target="_blank" rel="noreferrer">Dapatkan rute <span>↗</span></a></div><iframe src={mapEmbed} title="Peta lokasi Istano Basa Pagaruyung" width="600" height="450" style="border:0" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></section>
+    <section id="peta" class="map-section"><div class="map-copy"><p class="section-label light"><span>04</span> TEMUKAN LOKASI</p><h2>Istano Basa<br />Pagaruyung</h2><p>Jl. Sutan Alam Bagagarsyah<br />Pagaruyung, Kec. Tanjung Emas<br />Kabupaten Tanah Datar, Sumatera Barat 27281</p><a href="https://www.google.com/maps/dir/?api=1&destination=-0.4712964,100.6214049" target="_blank" rel="noreferrer">Dapatkan rute <span>↗</span></a></div><iframe src={mapEmbed} title="Peta lokasi Istano Basa Pagaruyung" width="600" height="450" style="border:0" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></section>
 
     <section id="sekitar" class="around-section content-wrap section-spacing">
       <div class="section-label"><span>05</span> LANJUTKAN PENJELAJAHAN</div><div class="around-heading"><h2>Tanah Datar tidak selesai<br />di satu halaman.</h2><p>Susun kunjungan yang mempertemukan budaya, lanskap, dan jeda untuk menikmati makanan lokal. Nama-nama di bawah adalah kategori dan tujuan kawasan, bukan rekomendasi komersial.</p></div><div class="around-grid"><article class="feature-card"><img src="/images/istana-pagaruyung-detail.jpg" alt="Bangunan Istano Basa Pagaruyung dari sudut lain" /><div><p class="eyebrow">BUDAYA DI SEKITAR</p><h3>Situs Prasasti Pagaruyung</h3><p>Tambahkan situs prasasti untuk memahami jejak sejarah kerajaan di wilayah Pagaruyung.</p></div></article><div class="nearby-list"><article><span>01</span><div><h3>Istano Silinduang Bulan</h3><p>Bangunan Rumah Gadang lain di kawasan Pagaruyung yang dapat melengkapi konteks arsitektur dan sejarah lokal.</p></div></article><article><span>02</span><div><h3>Batusangkar</h3><p>Gunakan kota ini sebagai titik singgah untuk kebutuhan perjalanan, makan, penginapan, dan akses menuju atraksi di Tanah Datar.</p></div></article><article><span>03</span><div><h3>Danau Singkarak & lanskap Minangkabau</h3><p>Jika rute memungkinkan, lanjutkan dengan tujuan alam dan budaya lain di Sumatera Barat. Periksa kondisi cuaca serta akses sebelum berangkat.</p></div></article></div></div>
