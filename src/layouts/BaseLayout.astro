@@ -8,10 +8,11 @@ interface Props {
   lang?: "id" | "en";
   alternateHref?: string;
   alternateLang?: "id" | "en";
+  noindex?: boolean;
 }
 
-const { title, description, lang = "id", alternateHref, alternateLang } = Astro.props;
-const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const { title, description, lang = "id", alternateHref, alternateLang, noindex = false } = Astro.props;
+const canonicalURL = !noindex && Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 const ogImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", Astro.site).href : "/images/istano-basa-pagaruyung-hero.jpg";
 
 // Build the full hreflang cluster (self + alternate + x-default) so Google can
@@ -20,7 +21,7 @@ const ogImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", 
 // relative paths are emitted (Google resolves them against the document URL).
 const selfHref = canonicalURL ? canonicalURL.href : Astro.url.pathname;
 const altHref = Astro.site && alternateHref ? new URL(alternateHref, Astro.site).href : alternateHref;
-const xDefaultHref = lang === "en" ? selfHref : altHref;
+const xDefaultHref = lang === "id" ? selfHref : altHref;
 ---
 
 <!doctype html>
@@ -30,10 +31,11 @@ const xDefaultHref = lang === "en" ? selfHref : altHref;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#243e34" />
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
     {canonicalURL && <link rel="canonical" href={canonicalURL.href} />}
-    <link rel="alternate" hreflang={lang} href={selfHref} />
-    {alternateHref && alternateLang && <link rel="alternate" hreflang={alternateLang} href={altHref} />}
-    {alternateHref && <link rel="alternate" hreflang="x-default" href={xDefaultHref} />}
+    {!noindex && <link rel="alternate" hreflang={lang} href={selfHref} />}
+    {!noindex && alternateHref && alternateLang && <link rel="alternate" hreflang={alternateLang} href={altHref} />}
+    {!noindex && alternateHref && <link rel="alternate" hreflang="x-default" href={xDefaultHref} />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE_NAME[lang]} />
     <meta property="og:title" content={title} />
