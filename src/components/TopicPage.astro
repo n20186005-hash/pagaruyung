@@ -1,0 +1,181 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteFooter from "./SiteFooter.astro";
+import type { TopicContent } from "../data/topics.types";
+import type { TopicGroup, TopicLang } from "../data/topics.index";
+import { relatedTopics, groupLabel } from "../data/topics.index";
+import { topicJsonLd } from "../lib/seo";
+import { SITE_IDENTITY } from "../data/site";
+
+interface Props {
+  topic: TopicContent;
+  slug: string;
+  lang: TopicLang;
+  group: TopicGroup;
+  site?: URL;
+}
+
+const { topic, slug, lang, group, site } = Astro.props;
+
+const title = topic.metaTitle;
+const description = topic.metaDescription;
+const groupName = groupLabel(group, lang);
+const related = relatedTopics(slug, lang);
+
+const homeHref = lang === "en" ? "/en/" : "/";
+const homeLabel = lang === "en" ? "Guide" : "Panduan";
+const groupLabelText = lang === "en" ? "Topic" : "Topik";
+const faqLabel = lang === "en" ? "Frequently asked questions" : "Pertanyaan umum";
+const sourcesLabel = lang === "en" ? "Sources" : "Sumber";
+const relatedLabel = lang === "en" ? "Related guides" : "Panduan terkait";
+const updatedLabel = lang === "en" ? `Updated ${topic.updated}` : `Diperbarui ${topic.updated}`;
+const disclaimer =
+  lang === "en" ? SITE_IDENTITY.en.disclaimer : SITE_IDENTITY.id.disclaimer;
+
+const jsonLd = topicJsonLd(topic, slug, lang, site);
+const alternateLang = lang === "en" ? "id" : "en";
+---
+
+<BaseLayout
+  {title}
+  {description}
+  {lang}
+  alternateHref={lang === "en" ? `/${slug}/` : `/en/${slug}/`}
+  alternateLang={alternateLang}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <header class="topic-header" id="top">
+    <div class="content-wrap topic-header-bar">
+      <a class="brand" href={homeHref} aria-label="Istano Basa Pagaruyung">
+        <svg class="brand-mark" viewBox="0 0 54 44" aria-hidden="true">
+          <path
+            d="M2 34h50M7 34V21l8-10 4 10 8-18 8 18 4-10 8 10v13M10 25h34M16 34v-7h22v7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.7"
+            stroke-linejoin="round"
+          ></path>
+          <path
+            d="M8 17 15 9l4 9M25 7l2-5 3 5M38 18l4-9 7 8"
+            fill="none"
+            stroke="#dca83a"
+            stroke-width="2.7"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+        <span><b>ISTANO BASA</b><small>PAGARUYUNG · TANAH DATAR</small></span>
+      </a>
+      <nav class="topic-nav" aria-label={lang === "en" ? "Topic navigation" : "Navigasi topik"}>
+        <a href={homeHref}>{homeLabel}</a>
+        <div class="language-switch language-switch-dark" aria-label="Pilih bahasa">
+          {
+            lang === "en" ? (
+              <>
+                <a href={`/${slug}/`} lang="id">ID</a>
+                <a class="active" href={Astro.url.pathname} aria-current="page">EN</a>
+              </>
+            ) : (
+              <>
+                <a class="active" href={Astro.url.pathname} aria-current="page">ID</a>
+                <a href={`/en/${slug}/`} lang="en">EN</a>
+              </>
+            )
+          }
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="topic-main">
+    <nav class="breadcrumb content-wrap" aria-label="Breadcrumb">
+      <a href={homeHref}>{homeLabel}</a>
+      <span aria-hidden="true">/</span>
+      <span>{topic.h1}</span>
+    </nav>
+
+    <article class="content-wrap topic-article">
+      <p class="section-label"><span>●</span> {groupName}</p>
+      <h1>{topic.h1}</h1>
+      <p class="topic-lead">{topic.lead}</p>
+
+      {
+        topic.image && (
+          <figure class="topic-hero-figure">
+            <img src={topic.image} alt={topic.imageAlt} loading="lazy" />
+          </figure>
+        )
+      }
+
+      {
+        topic.sections.map((section) => (
+          <section class="topic-section">
+            <h2>{section.heading}</h2>
+            {section.paragraphs.map((p) => (
+              <p>{p}</p>
+            ))}
+            {section.bullets && (
+              <ul class="topic-bullets">
+                {section.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))
+      }
+
+      {
+        topic.faqs.length > 0 && (
+          <section class="topic-faq" id="faq">
+            <h2>{faqLabel}</h2>
+            <div class="faq-list">
+              {topic.faqs.map((f) => (
+                <details>
+                  <summary>
+                    {f.q}
+                    <span>+</span>
+                  </summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <section class="topic-source">
+        <h2>{sourcesLabel}</h2>
+        <ul class="topic-sources">
+          {
+            topic.sources.map((s) => (
+              <li>
+                <a href={s.url} target="_blank" rel="noreferrer">{s.name}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="topic-updated">{updatedLabel}</p>
+      </section>
+    </article>
+
+    {
+      related.length > 0 && (
+        <aside class="topic-related content-wrap">
+          <h2>{relatedLabel}</h2>
+          <ul class="related-grid">
+            {related.map((r) => (
+              <li>
+                <a href={r.href}>{r.title}</a>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )
+    }
+
+    <p class="topic-disclaimer content-wrap">{disclaimer}</p>
+  </main>
+
+  <SiteFooter {lang} />
+</BaseLayout>

@@ -21,7 +21,7 @@ const ogImage = Astro.site ? new URL("/images/istano-basa-pagaruyung-hero.jpg", 
 // relative paths are emitted (Google resolves them against the document URL).
 const selfHref = canonicalURL ? canonicalURL.href : Astro.url.pathname;
 const altHref = Astro.site && alternateHref ? new URL(alternateHref, Astro.site).href : alternateHref;
-const xDefaultHref = lang === "id" ? selfHref : altHref;
+const xDefaultHref = lang === "en" ? selfHref : altHref;
 ---
 
 <!doctype html>

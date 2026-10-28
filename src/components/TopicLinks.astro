@@ -1,0 +1,56 @@
+---
+import type { TopicGroup, TopicLang } from "../data/topics.index";
+import { TOPICS, TOPIC_SLUGS, groupLabel, topicHref } from "../data/topics.index";
+
+interface Props {
+  lang?: TopicLang;
+}
+
+const { lang = "id" } = Astro.props;
+
+const ORDER: TopicGroup[] = ["kunjungan", "sejarah", "kuliner", "wisata"];
+
+const grouped = ORDER.map((group) => {
+  const slugs = TOPIC_SLUGS.filter((slug) => TOPICS[slug].group === group);
+  return {
+    group,
+    label: groupLabel(group, lang),
+    items: slugs.map((slug) => ({
+      slug,
+      href: topicHref(slug, lang),
+      title: TOPICS[slug][lang].h1,
+      kicker: TOPICS[slug][lang].kicker,
+    })),
+  };
+}).filter((g) => g.items.length > 0);
+
+const heading = lang === "en" ? "Topic guides" : "Panduan topik";
+const subheading =
+  lang === "en"
+    ? "Focused pages on visiting, history, food, and nearby trips around Istano Basa Pagaruyung."
+    : "Halaman fokus seputar kunjungan, sejarah, kuliner, dan wisata sekitar Istano Basa Pagaruyung.";
+---
+
+<section id="topik" class="topic-links content-wrap section-spacing">
+  <div class="section-label"><span>08</span> {heading.toUpperCase()}</div>
+  <h2>{heading}</h2>
+  <p class="topic-links-sub">{subheading}</p>
+
+  {
+    grouped.map((g) => (
+      <div class="topic-group">
+        <h3 class="topic-group-title">{g.label}</h3>
+        <ul class="topic-cards">
+          {g.items.map((item) => (
+            <li>
+              <a href={item.href} class="topic-card">
+                <span class="topic-card-kicker">{item.kicker}</span>
+                <span class="topic-card-title">{item.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</section>
